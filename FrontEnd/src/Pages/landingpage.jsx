@@ -67,7 +67,7 @@ const LandingPage = () => {
     // Fetch letter count from backend
     const fetchLetterCount = async () => {
       try {
-        const response = await fetch('http://localhost:5000/data/count');
+        const response = await fetch('https://superdad-backendproject.onrender.com/data/count');
         if (!response.ok) {
           throw new Error('Failed to fetch letter count');
         }
@@ -139,8 +139,8 @@ const LandingPage = () => {
           {/* Hero Section */}
           <div className="flex justify-center items-center min-h-screen">
           <section className="py-12 px-6 sm:px-8">
-              <div className="max-w-3xl mx-auto mb-40 text-center">
-                <h2 className="text-3xl sm:text-4xl mb-4 font-poppins font-bold drop-shadow-lg leading-tight">
+              <div className="w-80 mx-auto mb-70 text-center">
+                <h2 className="text-[36px]  mb-4 font-poppins font-bold drop-shadow-lg leading-tight">
                   This Father's Day, speak the love he rarely hears.
                 </h2>
                 <div className="mb-4 text-white font-poppins text-base sm:text-lg">
