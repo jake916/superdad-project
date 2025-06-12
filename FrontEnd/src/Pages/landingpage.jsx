@@ -1,9 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logo from '../assets/Untitled-1.png';
-import song from '../assets/01 - Northern Attitude.mp3';
 import shareImage from '../assets/Super Dad letter template.png';
 
 const LandingPage = () => {
@@ -149,7 +147,7 @@ const LandingPage = () => {
           </div>
 
       {/* Audio player and floating play button */}
-      <audio ref={audioRef} src={song} loop preload="auto" />
+      {/* <audio ref={audioRef} src={song} loop preload="auto" />
       <button
         onClick={togglePlay}
         aria-label={isPlaying ? 'Pause music' : 'Play music'}
@@ -164,7 +162,7 @@ const LandingPage = () => {
             <path d="M8 5v14l11-7z" />
           </svg>
         )}
-      </button>
+      </button> */}
 
       {/* Email Popup Modal */}
       {showEmailPopup && (
