@@ -15,7 +15,6 @@ const LandingPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [letterCount, setLetterCount] = useState(0);
 
-
   const [letterTitle, setLetterTitle] = useState('');
   const [letterBody, setLetterBody] = useState('');
   const [letterSender, setLetterSender] = useState('');
@@ -40,6 +39,20 @@ const LandingPage = () => {
   const handleLetterSenderChange = (e) => {
     setLetterSender(e.target.value);
   };
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -99,72 +112,753 @@ const LandingPage = () => {
     setPopupStage('letter');
   };
 
+  // Mobile view (< 768px)
+  if (windowWidth < 768) {
+    return (
+      <div className="w-full relative min-h-screen overflow-hidden text-white">
+        <div className="video-background relative w-full aspect-[9/16] overflow-hidden">
+          <iframe
+            src="https://www.youtube.com/embed/G5_AChAu8X4?autoplay=1&mute=1&loop=1&playlist=G5_AChAu8X4&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3"
+            title="YouTube video background"
+            frameBorder="0"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            className="absolute top-0 left-0 w-full h-full object-cover"
+          ></iframe>
+        </div>
+
+        {/* Content container */}
+        <div className="relative z-10 px-4">
+          {/* Navigation */}
+          <nav className="w-full flex items-center justify-center py-4 bg-transparent">
+            <div className="flex items-center">
+              <img src={logo} alt="Logo" className="h-16 w-auto" />
+            </div>
+          </nav>
+
+          {/* Hero Section */}
+          <div className="flex justify-center items-center min-h-screen">
+          <section className="py-12 px-6 sm:px-8">
+              <div className="max-w-3xl mx-auto mb-40 text-center">
+                <h2 className="text-3xl sm:text-4xl mb-4 font-poppins font-bold drop-shadow-lg leading-tight">
+                  This Father's Day, speak the love he rarely hears.
+                </h2>
+                <div className="mb-4 text-white font-poppins text-base sm:text-lg">
+                  <p> We are writing <b> a million letters </b> to our Dads</p>
+                </div>
+                <button
+                  className="px-5 py-3 bg-[#e63e21] text-[#ffffff] rounded-lg text-base sm:text-lg font-poppins font-semibold shadow-lg"
+                  onClick={openEmailPopup}
+                >
+                  Write him a letter
+                </button>
+              </div>
+            </section>
+          </div>
+
+          {showEmailPopup && (
+        <div
+          className="fixed inset-0 bg-[#000000]/60 flex items-center justify-center z-60"
+          onClick={closeEmailPopup}
+        >
+          <div
+            className="bg-[#000000]/80 rounded-lg max-w-full w-full mx-4 flex flex-col sm:flex-row overflow-auto max-h-[90vh] sm:max-h-[600px] p-4 sm:p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {popupStage === 'email' ? (
+              <>
+                {/* Email Stage */}
+                <div className="w-full sm:w-1/2 p-4 sm:p-6 flex flex-col justify-center">
+                  <h2 className="text-white text-left font-bold mb-6 text-lg sm:text-[20px]">
+                    Create your Letter
+                  </h2>
+                  <h3 className="text-sm sm:text-[15px] text-left font-regular mb-4 text-white">
+                    Enter your email
+                  </h3>
+                  <form onSubmit={handleEmailSubmit} className="w-full">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={handleEmailChange}
+                      required
+                      placeholder="Your email"
+                      className="w-full p-3 border text-black bg-[#f2f2f2] border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                    />
+                    <button
+                      type="submit"
+                      className="w-full mt-4 px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/50 transition-colors duration-200"
+                    >
+                      Submit
+                    </button>
+                  </form>
+                  <button
+                    onClick={closeEmailPopup}
+                    className="mt-4 text-white underline"
+                  >
+                    Cancel
+                  </button>
+                </div>
+                <div
+                  className="w-full sm:w-1/2 bg-cover bg-center h-48 sm:h-auto rounded-md mt-4 sm:mt-0"
+                  style={{ backgroundImage: "url('/src/assets/IMG_0234.JPG')" }}
+                ></div>
+              </>
+            ) : popupStage === 'letter' ? (
+              <>
+                {/* Letter Stage */}
+                <div className="flex flex-col items-center w-full p-4 sm:p-6 max-h-[80vh] overflow-auto">
+                  <div
+                    className="w-full h-48 sm:h-auto bg-cover bg-center mb-4 rounded-md"
+                    style={{ backgroundImage: "url('/src/assets/superdad.jpg')" }}
+                  ></div>
+                  <form
+                    className="w-full max-w-md"
+                    onSubmit={async (e) => {
+                      e.preventDefault();
+                      setIsLoading(true);
+                      setErrorMessage('');
+                      try {
+                        const response = await fetch('http://localhost:5000/data', {
+                          method: 'POST',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          body: JSON.stringify({
+                            email,
+                            letterTitle,
+                            letterBody,
+                            letterSender,
+                            sharePublicly,
+                          }),
+                        });
+                        if (!response.ok) {
+                          const errorData = await response.json();
+                          throw new Error(errorData.error || 'Failed to save letter');
+                        }
+                        const data = await response.json();
+                        // Use slug from response to generate link
+                        const generatedLink = `http://localhost:5173/letterview/${data.slug}`;
+                        setLetterSlug(data.slug);
+                        setLetterLink(generatedLink);
+                        setPopupStage('link');
+                      } catch (error) {
+                        setErrorMessage(error.message);
+                      } finally {
+                        setIsLoading(false);
+                      }
+                    }}
+                  >
+                    <div className="flex flex-col space-y-4 mb-4">
+                      <div>
+                        <label
+                          className="block mb-2 font-regular text-[12px] text-white text-left"
+                          htmlFor="title"
+                        >
+                          Title of the letter
+                        </label>
+                        <input
+                          id="title"
+                          type="text"
+                          value={letterTitle}
+                          onChange={(e) => setLetterTitle(e.target.value)}
+                          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                          placeholder="Enter the title"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label
+                          className="block mb-2 font-regular text-[12px] text-white text-left"
+                          htmlFor="sender"
+                        >
+                          Name of sender
+                        </label>
+                        <input
+                          id="sender"
+                          type="text"
+                          value={letterSender}
+                          onChange={(e) => setLetterSender(e.target.value)}
+                          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                          placeholder="Enter your name"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label
+                          className="block mb-2 ffont-regular text-[12px] text-white text-left"
+                          htmlFor="body"
+                        >
+                          Body of the letter
+                        </label>
+                        <textarea
+                          id="body"
+                          value={letterBody}
+                          onChange={(e) => {
+                            const text = e.target.value;
+                            const words = text.trim().split(/\s+/).filter(Boolean);
+                            if (words.length <= 130) {
+                              setLetterBody(text);
+                              setBodyWordCount(words.length);
+                            } else {
+                              const limitedText = words.slice(0, 130).join(' ');
+                              setLetterBody(limitedText);
+                              setBodyWordCount(130);
+                            }
+                          }}
+                          className="w-full p-3 mb-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                          placeholder="Write your letter here (max 130 words)"
+                          rows={15}
+                          maxLength={3000}
+                          required
+                        />
+                        <div className="text-sm text-gray-600 mb-2 text-center">
+                          Words remaining: {130 - bodyWordCount}
+                        </div>
+                      </div>
+                      <div className="text-sm text-white flex items-center justify-center space-x-4">
+                        <span>Can we share your letter on our social media?</span>
+                        <label className="flex items-center space-x-1">
+                          <input
+                            type="radio"
+                            name="sharePublicly"
+                            value="yes"
+                            checked={sharePublicly === 'yes'}
+                            onChange={(e) => setSharePublicly(e.target.value)}
+                            required
+                            className="accent-[#e63e21]"
+                          />
+                          <span>Yes</span>
+                        </label>
+                        <label className="flex items-center space-x-1">
+                          <input
+                            type="radio"
+                            name="sharePublicly"
+                            value="no"
+                            checked={sharePublicly === 'no'}
+                            onChange={(e) => setSharePublicly(e.target.value)}
+                            required
+                            className="accent-[#e63e21]"
+                          />
+                          <span>No</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <button
+                        type="submit"
+                        className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/50 transition-colors duration-200 flex items-center justify-center"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? (
+                          <>
+                            <svg
+                              className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              ></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                              ></path>
+                            </svg>
+                            Creating
+                          </>
+                        ) : (
+                          'Create Letter'
+                        )}
+                      </button>
+                      <button
+                        type="button"
+                        className="px-6 py-2 underline"
+                        onClick={() => setPopupStage('email')}
+                      >
+                        Back
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </>
+            ) : popupStage === 'link' ? (
+              <>
+                {/* Link Stage - Improved UI */}
+                <div className="flex flex-col items-center justify-center w-full h-full space-y-6">
+                  {/* Removed Your Letter Link Section */}
+                  {/* New Share with Dad Section */}
+                  <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 mt-10">
+                    <h2 className="text-black font-bold mb-4 text-[20px] text-center">
+                      Share letter with your dad
+                    </h2>
+                    <div className="flex justify-center">
+                      <button
+                        className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/80 transition-colors duration-200"
+                        onClick={async () => {
+                          if (navigator.share) {
+                            try {
+                              // First try sharing with files
+                              const response = await fetch(shareImage);
+                              const blob = await response.blob();
+                              const filesArray = [
+                                new File([blob], 'SuperDadLetter.png', {
+                                  type: blob.type,
+                                }),
+                              ];
+                              await navigator.share({
+                                title: 'Super Dad Letter',
+                                text: `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`,
+                                files: filesArray,
+                              });
+                              console.log('Share successful with files');
+                            } catch (error) {
+                              console.error('Error sharing with files:', error);
+                              toast.error('Error sharing with image file: ' + error.message);
+                              // Try sharing without files as fallback
+                              try {
+                                await navigator.share({
+                                  title: 'Super Dad Letter',
+                                  text: `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`,
+                                });
+                                console.log('Share successful without files');
+                              } catch (err) {
+                                console.error('Error sharing without files:', err);
+                                toast.error('Error sharing: ' + err.message);
+                              }
+                            }
+                          } else {
+                            toast.info('Sharing not supported on this device');
+                          }
+                        }}
+                      >
+                        Share
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : null}
+          </div>
+        </div>
+      )} 
+      <div className="fixed top-120 right-6 bg-[#ffffff] rounded-lg w-14 h-14 flex flex-col items-center justify-center shadow-lg z-50">
+        <span className="text-[#e63e21] font-bold text-xl leading-none">{letterCount}</span>
+        <span className="text-[#e63e21] text-[8px] leading-none">letters sent</span>
+      </div>
+      <ToastContainer />
+        </div>
+      </div>
+    );
+  }
+
+  // Tablet view (768px - 1024px)
+  if (windowWidth >= 768 && windowWidth < 1024) {
+    return (
+      <div className="w-full relative min-h-screen overflow-hidden text-white">
+        <div className="video-background relative w-full h-screen overflow-hidden">
+          <iframe
+            src="https://www.youtube.com/embed/G5_AChAu8X4?autoplay=1&mute=1&loop=1&playlist=G5_AChAu8X4&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3"
+            title="YouTube video background"
+            frameBorder="0"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            className="absolute top-0 left-0 w-full h-full object-cover"
+          ></iframe>
+        </div>
+
+        {/* Content container */}
+        <div className="relative z-10 px-6">
+          {/* Navigation */}
+          <nav className="w-full flex items-center justify-center py-4 bg-transparent">
+            <div className="flex items-center">
+              <img src={logo} alt="Logo" className="h-20 w-auto" />
+            </div>
+          </nav>
+
+          {/* Hero Section */}
+          <div className="flex justify-center items-center min-h-screen">
+            <section className="py-20 px-6">
+              <div className="max-w-4xl mx-auto mb-20 text-center">
+                <h2 className="text-4xl md:text-5xl mb-6 font-poppins font-bold drop-shadow-lg leading-tight">
+                  This Father's Day, speak the love he rarely hears.
+                </h2>
+                <div className="mb-10 text-white font-poppins text-lg">
+                  <p> We are writing a million letters to our Dads</p>
+                </div>
+                <button
+                  className="px-8 py-3 bg-[#e63e21] text-[#ffffff] rounded-lg text-base font-poppins font-semibold shadow-lg"
+                  onClick={openEmailPopup}
+                >
+                  Write him a letter
+                </button>
+              </div>
+
+            </section>
+          </div>
+
+          {showEmailPopup && (
+        <div
+          className="fixed inset-0 bg-[#000000]/60 flex items-center justify-center z-60"
+          onClick={closeEmailPopup}
+        >
+          <div
+            className="bg-[#000000]/80 rounded-lg max-w-3xl w-full mx-4 flex overflow-hidden min-h-[600px]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {popupStage === 'email' ? (
+              <>
+                {/* Email Stage */}
+                <div className="flex w-full">
+                  <div className="w-1/2 p-6 flex flex-col justify-center ">
+                    <h2 className='text-white text-left font-bold mb-10 text-[20px]'>Create your Letter</h2>
+                    <h3 className="text-[15px] text-left font-regular mb-4 text-white">Enter your email</h3>
+                    <form onSubmit={handleEmailSubmit} className="w-full">
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={handleEmailChange}
+                        required
+                        placeholder="Your email"
+                        className="w-full p-3 border text-black bg-[#f2f2f2] border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                      />
+                      <button
+                        type="submit"
+                        className="w-full mt-4 px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/50 transition-colors duration-200"
+                      >
+                        Submit
+                      </button>
+                    </form>
+                    <button
+                      onClick={closeEmailPopup}
+                      className="mt-4 text-white underline"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                  <div className="w-1/2 bg-cover bg-center" style={{ backgroundImage: "url('/src/assets/IMG_0234.JPG')" }}></div>
+                </div>
+              </>
+            ) : popupStage === 'letter' ? (
+              <>
+                {/* Letter Stage */}
+                <div className="flex flex-col items-center w-full p-6 max-h-[900px]">
+                  <div
+                    className="w-full h-full bg-cover bg-center mb-6"
+                    style={{ backgroundImage: "url('/src/assets/superdad.jpg')" }}
+                  ></div>
+                  <form
+                    className="w-full  max-w-md"
+                    onSubmit={async (e) => {
+                      e.preventDefault();
+                      setIsLoading(true);
+                      setErrorMessage('');
+                      try {
+                        const response = await fetch('http://localhost:5000/data', {
+                          method: 'POST',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          body: JSON.stringify({
+                            email,
+                            letterTitle,
+                            letterBody,
+                            letterSender,
+                            sharePublicly,
+                          }),
+                        });
+                        if (!response.ok) {
+                          const errorData = await response.json();
+                          throw new Error(errorData.error || 'Failed to save letter');
+                        }
+                        const data = await response.json();
+                        // Use slug from response to generate link
+                        const generatedLink = `http://localhost:5173/letterview/${data.slug}`;
+                        setLetterSlug(data.slug);
+                        setLetterLink(generatedLink);
+                        setPopupStage('link');
+                      } catch (error) {
+                        setErrorMessage(error.message);
+                      } finally {
+                        setIsLoading(false);
+                      }
+                    }}
+                  >
+                    <div className="flex space-x-4 mb-4">
+                      <div className="flex-1">
+                        <label className="block mb-2 font-regular text-[12px] text-white text-left" htmlFor="title">
+                          Title of the letter
+                        </label>
+                        <input
+                          id="title"
+                          type="text"
+                          value={letterTitle}
+                          onChange={(e) => setLetterTitle(e.target.value)}
+                          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                          placeholder="Enter the title"
+                          required
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <label className="block mb-2 font-regular text-[12px] text-white text-left" htmlFor="sender">
+                          Name of sender
+                        </label>
+                        <input
+                          id="sender"
+                          type="text"
+                          value={letterSender}
+                          onChange={(e) => setLetterSender(e.target.value)}
+                          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                          placeholder="Enter your name"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <label className="block mb-2 ffont-regular text-[12px] text-white text-left" htmlFor="body">
+                      Body of the letter
+                    </label>
+                    <textarea
+                      id="body"
+                      value={letterBody}
+                      onChange={(e) => {
+                        const text = e.target.value;
+                        const words = text.trim().split(/\s+/).filter(Boolean);
+                        if (words.length <= 130) {
+                          setLetterBody(text);
+                          setBodyWordCount(words.length);
+                        } else {
+                          const limitedText = words.slice(0, 130).join(' ');
+                          setLetterBody(limitedText);
+                          setBodyWordCount(130);
+                        }
+                      }}
+                      className="w-full p-3 mb-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                      placeholder="Write your letter here (max 130 words)"
+                      rows={15}
+                      maxLength={3000}
+                      required
+                    />
+                    <div className="mb-4">
+                      <div className="text-sm text-gray-600 mb-2 text-center">
+                        Words remaining: {130 - bodyWordCount}
+                      </div>
+                      <div className="text-sm text-white flex items-center justify-center space-x-4">
+                        <span>Can we share your letter on our social media?</span>
+                        <label className="flex items-center space-x-1">
+                          <input
+                            type="radio"
+                            name="sharePublicly"
+                            value="yes"
+                            checked={sharePublicly === 'yes'}
+                            onChange={(e) => setSharePublicly(e.target.value)}
+                            required
+                            className="accent-[#e63e21]"
+                          />
+                          <span>Yes</span>
+                        </label>
+                        <label className="flex items-center space-x-1">
+                          <input
+                            type="radio"
+                            name="sharePublicly"
+                            value="no"
+                            checked={sharePublicly === 'no'}
+                            onChange={(e) => setSharePublicly(e.target.value)}
+                            required
+                            className="accent-[#e63e21]"
+                          />
+                          <span>No</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <button
+                        type="submit"
+                        className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/50 transition-colors duration-200 flex items-center justify-center"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? (
+                          <>
+                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                            </svg>
+                            Creating
+                          </>
+                        ) : (
+                          'Create Letter'
+                        )}
+                      </button>
+                      <button
+                        type="button"
+                        className="px-6 py-2 underline"
+                        onClick={() => setPopupStage('email')}
+                      >
+                        Back
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </>
+            ) : popupStage === 'link' ? (
+              <>
+                {/* Link Stage - Improved UI */}
+                <div className="flex flex-col items-center justify-center w-full h-full space-y-6">
+                  {/* Removed Your Letter Link Section */}
+
+                  {/* New Share with Dad Section */}
+                  <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 mt-50">
+                    <h2 className="text-black font-bold mb-4 text-[20px] text-center">Share letter with your dad</h2>
+                    <div className="flex justify-center">
+                      <button
+                        className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/80 transition-colors duration-200"
+                        onClick={async () => {
+                          if (navigator.share) {
+                            try {
+                              // First try sharing with files
+                              const response = await fetch(shareImage);
+                              const blob = await response.blob();
+                              const filesArray = [
+                                new File([blob], 'SuperDadLetter.png', {
+                                  type: blob.type,
+                                }),
+                              ];
+                              await navigator.share({
+                                title: 'Super Dad Letter',
+                                text: `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`,
+                                files: filesArray,
+                              });
+                              console.log('Share successful with files');
+                            } catch (error) {
+                              console.error('Error sharing with files:', error);
+                              toast.error('Error sharing with image file: ' + error.message);
+                              // Try sharing without files as fallback
+                              try {
+                                await navigator.share({
+                                  title: 'Super Dad Letter',
+                                  text: `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`,
+                                });
+                                console.log('Share successful without files');
+                              } catch (err) {
+                                console.error('Error sharing without files:', err);
+                                toast.error('Error sharing: ' + err.message);
+                              }
+                            }
+                          } else {
+                            toast.info('Sharing not supported on this device');
+                          }
+                        }}
+                      >
+                        Share
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : popupStage === 'link' ? (
+              <>
+                {/* Link Stage - Improved UI */}
+                <div className="flex flex-col items-center justify-center w-full h-full space-y-6">
+                  {/* Removed Your Letter Link Section */}
+
+                  {/* New Share with Dad Section */}
+                  <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 mt-50">
+                    <h2 className="text-black font-bold mb-4 text-[20px] text-center">Share letter with your dad</h2>
+                    <div className="flex justify-center">
+                      <button
+                        className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/80 transition-colors duration-200"
+                        onClick={async () => {
+                          if (navigator.share) {
+                            try {
+                              const response = await fetch(shareImage);
+                              const blob = await response.blob();
+                              const filesArray = [
+                                new File([blob], 'SuperDadLetter.png', {
+                                  type: blob.type,
+                                }),
+                              ];
+                              await navigator.share({
+                                title: 'Super Dad Letter',
+                                text: `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`,
+                                files: filesArray,
+                              });
+                            } catch (error) {
+                              toast.error('Error sharing: ' + error.message);
+                            }
+                          } else {
+                            toast.info('Sharing not supported on this device');
+                          }
+                        }}
+                      >
+                        Share
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : null}
+          </div>
+        </div>
+      )} 
+      <div className="fixed top-120 right-6 bg-[#ffffff] rounded-lg w-14 h-14 flex flex-col items-center justify-center shadow-lg z-50">
+        <span className="text-[#e63e21] font-bold text-xl leading-none">{letterCount}</span>
+        <span className="text-[#e63e21] text-[8px] leading-none">letters sent</span>
+      </div>
+      <ToastContainer />
+        </div>
+      </div>
+    );
+  }
+
+  // Desktop view (≥ 1024px)
   return (
     <div className="w-full relative min-h-screen overflow-hidden text-white">
-      <div className="video-background">
+      <div className="video-background relative w-full h-screen overflow-hidden">
         <iframe
           src="https://www.youtube.com/embed/G5_AChAu8X4?autoplay=1&mute=1&loop=1&playlist=G5_AChAu8X4&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3"
           title="YouTube video background"
           frameBorder="0"
           allow="autoplay; encrypted-media"
           allowFullScreen
+          className="absolute top-0 left-0 w-full h-full object-cover"
         ></iframe>
       </div>
 
-          {/* Content container */}
-          <div className="relative z-10">
-            {/* Navigation */}
-            <nav className="w-full flex items-center justify-center px-6 py-4 bg-transparent">
-              <div className="flex items-center">
-                <img src={logo} alt="Logo" className="h-25 w-auto" />
+      {/* Content container */}
+      <div className="relative z-10 px-6">
+        {/* Navigation */}
+        <nav className="w-full flex items-center justify-center py-4 bg-transparent">
+          <div className="flex items-center">
+            <img src={logo} alt="Logo" className="h-20 w-auto" />
+          </div>
+        </nav>
+
+        {/* Hero Section */}
+        <div className="flex justify-center items-center min-h-screen">
+          <section className="py-20 px-6">
+            <div className="max-w-4xl mx-auto mb-20 text-center">
+              <h2 className="text-5xl lg:text-6xl mb-6 font-poppins font-bold drop-shadow-lg leading-tight">
+                This Father's Day, speak the <br /> love he rarely hears.
+              </h2>
+              <div className="mb-10 text-white font-poppins text-xl">
+                <p> We are writing <b> a million letters </b> to our Dads</p>
               </div>
-              {/* <button
-                className="px-6 py-2 bg-[#d8dadb]/60 text-[#ffffff] hover:bg-blue-700 transition-colors duration-200"
+              <button
+                className="px-8 py-3 bg-[#e63e21] text-[#ffffff] rounded-lg text-lg font-poppins font-semibold shadow-lg"
                 onClick={openEmailPopup}
               >
-                Create your Letter
-              </button> */}
-            </nav>
-
-            {/* Hero Section */}
-            <div className="flex justify-center items-center min-h-screen">
-              <section className="py-20 px-6">
-                <div className="max-w-4xl mx-auto mb-70 text-center">
-                  <h2 className="text-[60px] mb-6 font-poppins font-bold drop-shadow-lg">
-                    This Father's Day, speak the <br /> love he rarely hears.
-                  </h2>
-                  <div className="mb-10 text-white font-poppins  text-[18px]">
-                    <p> We are writing <b> a million letters </b> to our Dads</p>
-                  </div>
-                  <button className="px-8 py-3 bg-[#e63e21] text-[#ffffff] rounded-lg text-lg font-poppins font-semibold shadow-lg"
-                    onClick={openEmailPopup}>
-                    Write him a letter
-                  </button>
-                  
-                </div>
-              </section>
+                Write him a letter
+              </button>
             </div>
-          </div>
+          </section>
+        </div>
+      </div>
 
-      {/* Audio player and floating play button */}
-      {/* <audio ref={audioRef} src={song} loop preload="auto" />
-      <button
-        onClick={togglePlay}
-        aria-label={isPlaying ? 'Pause music' : 'Play music'}
-        className="fixed bottom-6 right-6 bg-[#e63e21]/50 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg transition-colors duration-200 cursor-pointer z-50"
-      >
-        {isPlaying ? (
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6" />
-          </svg>
-        ) : (
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="currentColor" viewBox="0 0 24 24" stroke="none">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-        )}
-      </button> */}
-
-      {/* Email Popup Modal */}
       {showEmailPopup && (
         <div
           className="fixed inset-0 bg-[#000000]/60 flex items-center justify-center z-60"
