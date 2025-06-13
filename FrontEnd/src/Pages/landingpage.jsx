@@ -555,13 +555,13 @@ const LandingPage = () => {
                     style={{ backgroundImage: "url('/src/assets/superdad.jpg')" }}
                   ></div>
                   <form
-                    className="w-full  max-w-md"
+                    className="w-full max-w-md"
                     onSubmit={async (e) => {
                       e.preventDefault();
                       setIsLoading(true);
                       setErrorMessage('');
                       try {
-                        const response = await fetch('http://localhost:5000/data', {
+                        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/data`, {
                           method: 'POST',
                           headers: {
                             'Content-Type': 'application/json',
@@ -580,7 +580,7 @@ const LandingPage = () => {
                         }
                         const data = await response.json();
                         // Use slug from response to generate link
-                        const generatedLink = `http://localhost:5173/letterview/${data.slug}`;
+                        const generatedLink = `${import.meta.env.VITE_FRONTEND_URL}/letterview/${data.slug}`;
                         setLetterSlug(data.slug);
                         setLetterLink(generatedLink);
                         setPopupStage('link');
@@ -917,7 +917,7 @@ const LandingPage = () => {
                       setIsLoading(true);
                       setErrorMessage('');
                       try {
-                        const response = await fetch('http://localhost:5000/data', {
+                        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/data`, {
                           method: 'POST',
                           headers: {
                             'Content-Type': 'application/json',
@@ -936,7 +936,7 @@ const LandingPage = () => {
                         }
                         const data = await response.json();
                         // Use slug from response to generate link
-                        const generatedLink = `http://localhost:5173/letterview/${data.slug}`;
+                        const generatedLink = `${import.meta.env.VITE_FRONTEND_URL}/letterview/${data.slug}`;
                         setLetterSlug(data.slug);
                         setLetterLink(generatedLink);
                         setPopupStage('link');
