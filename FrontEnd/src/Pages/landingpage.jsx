@@ -2,9 +2,9 @@ import React, { useRef, useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logo from '../assets/Untitled-1.png';
-import shareImage from '../assets/Super Dad letter template.png';
 import img0234 from '../assets/IMG_0234.JPG';
 import superdad from '../assets/superdad.jpg';
+import fathersImage from '../assets/Fathers Image.png';
 
 const LandingPage = () => {
   console.log('Backend URL:', import.meta.env.VITE_BACKEND_URL);
@@ -409,10 +409,10 @@ const LandingPage = () => {
                           if (navigator.share) {
                             try {
                               // First try sharing with files
-                              const response = await fetch('/assets/Fathers day campaign (Shareed post).png');
+                              const response = await fetch(fathersImage);
                               const blob = await response.blob();
                               const filesArray = [
-                                new File([blob], 'Fathers day campaign (Shareed post).png', {
+                                new File([blob], 'Fathers Image.png', {
                                   type: blob.type,
                                 }),
                               ];
@@ -730,10 +730,10 @@ const LandingPage = () => {
                           if (navigator.share) {
                             try {
                               // First try sharing with files
-                              const response = await fetch(shareImage);
+                              const response = await fetch(fathersImage);
                               const blob = await response.blob();
                               const filesArray = [
-                                new File([blob], 'SuperDadLetter.png', {
+                                new File([blob], 'Fathers Image.png', {
                                   type: blob.type,
                                 }),
                               ];
@@ -1045,10 +1045,10 @@ const LandingPage = () => {
                           if (navigator.share) {
                             try {
                               // First try sharing with files
-                              const response = await fetch(shareImage);
+                              const response = await fetch(fathersImage);
                               const blob = await response.blob();
                               const filesArray = [
-                                new File([blob], 'SuperDadLetter.png', {
+                                new File([blob], 'Fathers Image.png', {
                                   type: blob.type,
                                 }),
                               ];
