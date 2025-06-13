@@ -3,6 +3,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logo from '../assets/Untitled-1.png';
 import shareImage from '../assets/Super Dad letter template.png';
+import img0234 from '../assets/IMG_0234.JPG';
+import superdad from '../assets/superdad.jpg';
 
 const LandingPage = () => {
   console.log('Backend URL:', import.meta.env.VITE_BACKEND_URL);
@@ -202,7 +204,7 @@ const LandingPage = () => {
                 </div>
                   <div
                     className="w-full sm:w-1/2 bg-cover bg-center h-48 sm:h-auto rounded-md mt-4 sm:mt-0"
-                    style={{ backgroundImage: `url(${require('../assets/IMG_0234.JPG')})` }}
+                    style={{ backgroundImage: `url(${img0234})` }}
                   ></div>
               </>
             ) : popupStage === 'letter' ? (
@@ -211,7 +213,7 @@ const LandingPage = () => {
                 <div className="flex flex-col items-center w-full p-4 sm:p-6 max-h-[80vh] overflow-auto">
                   <div
                     className="w-full h-48 sm:h-auto bg-cover bg-center mb-4 rounded-md"
-                    style={{ backgroundImage: `url(${require('../assets/superdad.jpg')})` }}
+                    style={{ backgroundImage: `url(${superdad})` }}
                   ></div>
                   <form
                     className="w-full max-w-md"
