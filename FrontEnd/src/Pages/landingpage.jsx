@@ -121,7 +121,7 @@ const LandingPage = () => {
     return (
       <div className="w-full relative min-h-screen overflow-hidden text-white">
         <div className="video-background relative w-full aspect-[9/16] overflow-hidden">
-        <iframe width="full" height="full" src="https://www.youtube.com/embed/nOOyE9X3AAU?autoplay=1&mute=1" title="Super Dad Animation: How To Calm A Crying Baby (2025)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ></iframe>
+          <iframe width="full" height="full" src="https://www.youtube.com/embed/nOOyE9X3AAU?autoplay=1&mute=1" title="Super Dad Animation: How To Calm A Crying Baby (2025)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ></iframe>
         </div>
 
         {/* Content container */}
@@ -135,7 +135,7 @@ const LandingPage = () => {
 
           {/* Hero Section */}
           <div className="flex justify-center items-center min-h-screen">
-          <section className="py-12 px-6 sm:px-8">
+            <section className="py-12 px-6 sm:px-8">
               <div className="w-80 mx-auto mb-70 text-center">
                 <h2 className="text-[36px]  mb-4 font-poppins font-bold drop-shadow-lg leading-tight">
                   This Father's Day, speak the love he rarely hears.
@@ -154,356 +154,343 @@ const LandingPage = () => {
           </div>
 
           {showEmailPopup && (
-        <div
-          className="fixed inset-0 bg-[#000000]/60 flex items-center justify-center z-60"
-          onClick={closeEmailPopup}
-        >
-          <div
-            className="bg-[#000000]/80 rounded-lg max-w-full w-full mx-4 flex flex-col sm:flex-row overflow-auto max-h-[90vh] sm:max-h-[600px] p-4 sm:p-6"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {popupStage === 'email' ? (
-              <>
-                {/* Email Stage */}
-                <div className="w-full sm:w-1/2 p-4 sm:p-6 flex flex-col justify-center">
-                  <h2 className="text-white text-left font-bold mb-6 text-lg sm:text-[20px]">
-                    Create your Letter
-                  </h2>
-                  <h3 className="text-sm sm:text-[15px] text-left font-regular mb-4 text-white">
-                    Enter your email
-                  </h3>
-                  <form onSubmit={handleEmailSubmit} className="w-full">
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={handleEmailChange}
-                      required
-                      placeholder="Your email"
-                      className="w-full p-3 border text-black bg-[#f2f2f2] border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-                    />
-                    <button
-                      type="submit"
-                      className="w-full mt-4 px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/50 transition-colors duration-200"
-                    >
-                      Submit
-                    </button>
-                  </form>
-                  <button
-                    onClick={closeEmailPopup}
-                    className="mt-4 text-white underline"
-                  >
-                    Cancel
-                  </button>
-                </div>
-                  <div
-                    className="w-full sm:w-1/2 bg-cover bg-center h-48 sm:h-auto rounded-md mt-4 sm:mt-0"
-                    style={{ backgroundImage: `url(${img0234})` }}
-                  ></div>
-              </>
-            ) : popupStage === 'letter' ? (
-              <>
-                {/* Letter Stage */}
-                <div className="flex flex-col items-center w-full p-4 sm:p-6 max-h-[80vh] overflow-auto">
-                  <div
-                    className="w-full h-48 sm:h-auto bg-cover bg-center mb-4 rounded-md"
-                    style={{ backgroundImage: `url(${superdad})` }}
-                  ></div>
-                  <form
-                    className="w-full max-w-md"
-                    onSubmit={async (e) => {
-                      e.preventDefault();
-                      setIsLoading(true);
-                      setErrorMessage('');
-                      try {
-                        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/data`, {
-                          method: 'POST',
-                          headers: {
-                            'Content-Type': 'application/json',
-                          },
-                          body: JSON.stringify({
-                            email,
-                            letterTitle,
-                            letterBody,
-                            letterSender,
-                            sharePublicly,
-                          }),
-                        });
-                        if (!response.ok) {
-                          const errorData = await response.json();
-                          throw new Error(errorData.error || 'Failed to save letter');
-                        }
-                        const data = await response.json();
-                        // Use slug from response to generate link
-                        const generatedLink = `${import.meta.env.VITE_FRONTEND_URL}/letterview/${data.slug}`;
-                        setLetterSlug(data.slug);
-                        setLetterLink(generatedLink);
-                        setPopupStage('link');
-                      } catch (error) {
-                      setErrorMessage(error.message);
-                    } finally {
-                      setIsLoading(false);
-                    }
-                  }}
-                >
-                    <div className="flex flex-col space-y-4 mb-4">
-                      <div>
-                        <label
-                          className="block mb-2 font-regular text-[12px] text-white text-left"
-                          htmlFor="title"
-                        >
-                          Title of the letter
-                        </label>
+            <div
+              className="fixed inset-0 bg-[#000000]/60 flex items-center justify-center z-60"
+              onClick={closeEmailPopup}
+            >
+              <div
+                className="bg-[#000000]/80 rounded-lg max-w-full w-full mx-4 flex flex-col sm:flex-row overflow-auto max-h-[90vh] sm:max-h-[600px] p-4 sm:p-6"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {popupStage === 'email' ? (
+                  <>
+                    {/* Email Stage */}
+                    <div className="w-full sm:w-1/2 p-4 sm:p-6 flex flex-col justify-center">
+                      <h2 className="text-white text-left font-bold mb-6 text-lg sm:text-[20px]">
+                        Create your Letter
+                      </h2>
+                      <h3 className="text-sm sm:text-[15px] text-left font-regular mb-4 text-white">
+                        Enter your email
+                      </h3>
+                      <form onSubmit={handleEmailSubmit} className="w-full">
                         <input
-                          id="title"
-                          type="text"
-                          value={letterTitle}
-                          onChange={(e) => setLetterTitle(e.target.value)}
-                          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-                          placeholder="Enter the title"
+                          type="email"
+                          value={email}
+                          onChange={handleEmailChange}
                           required
+                          placeholder="Your email"
+                          className="w-full p-3 border text-black bg-[#f2f2f2] border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
                         />
-                      </div>
-                      <div>
-                        <label
-                          className="block mb-2 font-regular text-[12px] text-white text-left"
-                          htmlFor="sender"
+                        <button
+                          type="submit"
+                          className="w-full mt-4 px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/50 transition-colors duration-200"
                         >
-                          Name of sender
-                        </label>
-                        <input
-                          id="sender"
-                          type="text"
-                          value={letterSender}
-                          onChange={(e) => setLetterSender(e.target.value)}
-                          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-                          placeholder="Enter your name"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label
-                          className="block mb-2 ffont-regular text-[12px] text-white text-left"
-                          htmlFor="body"
-                        >
-                          Body of the letter
-                        </label>
-                        <textarea
-                          id="body"
-                          value={letterBody}
-                          onChange={(e) => {
-                            const text = e.target.value;
-                            const words = text.trim().split(/\s+/).filter(Boolean);
-                            if (words.length <= 130) {
-                              setLetterBody(text);
-                              setBodyWordCount(words.length);
-                            } else {
-                              const limitedText = words.slice(0, 130).join(' ');
-                              setLetterBody(limitedText);
-                              setBodyWordCount(130);
+                          Submit
+                        </button>
+                      </form>
+                      <button
+                        onClick={closeEmailPopup}
+                        className="mt-4 text-white underline"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                    <div
+                      className="w-full sm:w-1/2 bg-cover bg-center h-48 sm:h-auto rounded-md mt-4 sm:mt-0"
+                      style={{ backgroundImage: `url(${img0234})` }}
+                    ></div>
+                  </>
+                ) : popupStage === 'letter' ? (
+                  <>
+                    {/* Letter Stage */}
+                    <div className="flex flex-col items-center w-full p-4 sm:p-6 max-h-[80vh] overflow-auto">
+                      <div
+                        className="w-full h-48 sm:h-auto bg-cover bg-center mb-4 rounded-md"
+                        style={{ backgroundImage: `url(${superdad})` }}
+                      ></div>
+                      <form
+                        className="w-full max-w-md"
+                        onSubmit={async (e) => {
+                          e.preventDefault();
+                          setIsLoading(true);
+                          setErrorMessage('');
+                          try {
+                            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/data`, {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({
+                                email,
+                                letterTitle,
+                                letterBody,
+                                letterSender,
+                                sharePublicly,
+                              }),
+                            });
+                            if (!response.ok) {
+                              const errorData = await response.json();
+                              throw new Error(errorData.error || 'Failed to save letter');
                             }
-                          }}
-                          className="w-full p-3 mb-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-                          placeholder="Write your letter here (max 130 words)"
-                          rows={15}
-                          maxLength={3000}
-                          required
-                        />
-                        <div className="text-sm text-gray-600 mb-2 text-center">
-                          Words remaining: {130 - bodyWordCount}
+                            const data = await response.json();
+                            // Use slug from response to generate link
+                            const generatedLink = `${import.meta.env.VITE_FRONTEND_URL}/letterview/${data.slug}`;
+                            setLetterSlug(data.slug);
+                            setLetterLink(generatedLink);
+                            setPopupStage('link');
+                          } catch (error) {
+                            setErrorMessage(error.message);
+                          } finally {
+                            setIsLoading(false);
+                          }
+                        }}
+                      >
+                        <div className="flex flex-col space-y-4 mb-4">
+                          <div>
+                            <label
+                              className="block mb-2 font-regular text-[12px] text-white text-left"
+                              htmlFor="title"
+                            >
+                              Title of the letter
+                            </label>
+                            <input
+                              id="title"
+                              type="text"
+                              value={letterTitle}
+                              onChange={(e) => setLetterTitle(e.target.value)}
+                              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                              placeholder="Enter the title"
+                              required
+                            />
+                          </div>
+                          <div>
+                            <label
+                              className="block mb-2 font-regular text-[12px] text-white text-left"
+                              htmlFor="sender"
+                            >
+                              Name of sender
+                            </label>
+                            <input
+                              id="sender"
+                              type="text"
+                              value={letterSender}
+                              onChange={(e) => setLetterSender(e.target.value)}
+                              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                              placeholder="Enter your name"
+                              required
+                            />
+                          </div>
+                          <div>
+                            <label
+                              className="block mb-2 ffont-regular text-[12px] text-white text-left"
+                              htmlFor="body"
+                            >
+                              Body of the letter
+                            </label>
+                            <textarea
+                              id="body"
+                              value={letterBody}
+                              onChange={(e) => {
+                                const text = e.target.value;
+                                const words = text.trim().split(/\s+/).filter(Boolean);
+                                if (words.length <= 130) {
+                                  setLetterBody(text);
+                                  setBodyWordCount(words.length);
+                                } else {
+                                  const limitedText = words.slice(0, 130).join(' ');
+                                  setLetterBody(limitedText);
+                                  setBodyWordCount(130);
+                                }
+                              }}
+                              className="w-full p-3 mb-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                              placeholder="Write your letter here (max 130 words)"
+                              rows={15}
+                              maxLength={3000}
+                              required
+                            />
+                            <div className="text-sm text-gray-600 mb-2 text-center">
+                              Words remaining: {130 - bodyWordCount}
+                            </div>
+                          </div>
+                          <div className="text-sm text-white flex items-center justify-center space-x-4">
+                            <span>Can we share your letter on our social media?</span>
+                            <label className="flex items-center space-x-1">
+                              <input
+                                type="radio"
+                                name="sharePublicly"
+                                value="yes"
+                                checked={sharePublicly === 'yes'}
+                                onChange={(e) => setSharePublicly(e.target.value)}
+                                required
+                                className="accent-[#e63e21]"
+                              />
+                              <span>Yes</span>
+                            </label>
+                            <label className="flex items-center space-x-1">
+                              <input
+                                type="radio"
+                                name="sharePublicly"
+                                value="no"
+                                checked={sharePublicly === 'no'}
+                                onChange={(e) => setSharePublicly(e.target.value)}
+                                required
+                                className="accent-[#e63e21]"
+                              />
+                              <span>No</span>
+                            </label>
+                          </div>
+                        </div>
+                        <div className="flex justify-between">
+                          <button
+                            type="submit"
+                            className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/50 transition-colors duration-200 flex items-center justify-center"
+                            disabled={isLoading}
+                          >
+                            {isLoading ? (
+                              <>
+                                <svg
+                                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <circle
+                                    className="opacity-25"
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                    stroke="currentColor"
+                                    strokeWidth="4"
+                                  ></circle>
+                                  <path
+                                    className="opacity-75"
+                                    fill="currentColor"
+                                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                                  ></path>
+                                </svg>
+                                Creating
+                              </>
+                            ) : (
+                              'Create Letter'
+                            )}
+                          </button>
+                          <button
+                            type="button"
+                            className="px-6 py-2 underline"
+                            onClick={() => setPopupStage('email')}
+                          >
+                            Back
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </>
+                ) : popupStage === 'link' ? (
+                  <>
+                    {/* Link Stage - Improved UI */}
+                    <div className="flex flex-col items-center justify-center w-full h-full space-y-6">
+                      {/* Removed Your Letter Link Section */}
+                      {/* New Share with Dad Section */}
+                      <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 mt-10">
+                        <h2 className="text-black font-bold mb-4 text-[20px] text-center">
+                          Share letter with your dad
+                        </h2>
+                        <div className="flex flex-col items-center space-y-3">
+                          <button
+                            className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/80 transition-colors duration-200"
+                            onClick={async () => {
+                              const shareText = `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`;
+
+                              if (navigator.share) {
+                                try {
+                                  await navigator.share({
+                                    title: 'Super Dad Letter',
+                                    text: shareText,
+                                  });
+                                  console.log('Share successful');
+                                } catch (error) {
+                                  console.error('Error sharing:', error);
+                                  // Fallback to clipboard if share fails
+                                  try {
+                                    await navigator.clipboard.writeText(shareText);
+                                    toast.success('Link copied to clipboard! You can now paste it to share with your dad.');
+                                  } catch (clipboardError) {
+                                    toast.error('Unable to share. Please copy this link manually: ' + letterLink);
+                                  }
+                                }
+                              } else {
+                                // Browser doesn't support Web Share API, copy to clipboard
+                                try {
+                                  await navigator.clipboard.writeText(shareText);
+                                  toast.success('Link copied to clipboard! You can now paste it to share with your dad.');
+                                } catch (clipboardError) {
+                                  // Final fallback for very old browsers
+                                  const textArea = document.createElement('textarea');
+                                  textArea.value = shareText;
+                                  textArea.style.position = 'fixed';
+                                  textArea.style.opacity = '0';
+                                  document.body.appendChild(textArea);
+                                  textArea.focus();
+                                  textArea.select();
+
+                                  try {
+                                    document.execCommand('copy');
+                                    toast.success('Link copied to clipboard! You can now paste it to share with your dad.');
+                                  } catch (execError) {
+                                    toast.error('Unable to copy. Please manually copy this link: ' + letterLink);
+                                  } finally {
+                                    document.body.removeChild(textArea);
+                                  }
+                                }
+                              }
+                            }}
+                          >
+                            Share
+                          </button>
+
+                          <button
+                            className="px-6 py-2 text-gray-500  "
+                            onClick={async () => {
+                              const copyText = `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`;
+                              try {
+                                await navigator.clipboard.writeText(copyText);
+                                toast.success('Link copied to clipboard!');
+                              } catch (clipboardError) {
+                                // Fallback for browsers that don't support clipboard API
+                                const textArea = document.createElement('textarea');
+                                textArea.value = letterLink;
+                                textArea.style.position = 'fixed';
+                                textArea.style.opacity = '0';
+                                document.body.appendChild(textArea);
+                                textArea.focus();
+                                textArea.select();
+
+                                try {
+                                  document.execCommand('copy');
+                                  toast.success('Link copied to clipboard!');
+                                } catch (execError) {
+                                  toast.error('Unable to copy. Please manually copy this link: ' + letterLink);
+                                } finally {
+                                  document.body.removeChild(textArea);
+                                }
+                              }
+                            }}
+                          >
+                            Copy Link
+                          </button>
                         </div>
                       </div>
-                      <div className="text-sm text-white flex items-center justify-center space-x-4">
-                        <span>Can we share your letter on our social media?</span>
-                        <label className="flex items-center space-x-1">
-                          <input
-                            type="radio"
-                            name="sharePublicly"
-                            value="yes"
-                            checked={sharePublicly === 'yes'}
-                            onChange={(e) => setSharePublicly(e.target.value)}
-                            required
-                            className="accent-[#e63e21]"
-                          />
-                          <span>Yes</span>
-                        </label>
-                        <label className="flex items-center space-x-1">
-                          <input
-                            type="radio"
-                            name="sharePublicly"
-                            value="no"
-                            checked={sharePublicly === 'no'}
-                            onChange={(e) => setSharePublicly(e.target.value)}
-                            required
-                            className="accent-[#e63e21]"
-                          />
-                          <span>No</span>
-                        </label>
-                      </div>
                     </div>
-                    <div className="flex justify-between">
-                      <button
-                        type="submit"
-                        className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/50 transition-colors duration-200 flex items-center justify-center"
-                        disabled={isLoading}
-                      >
-                        {isLoading ? (
-                          <>
-                            <svg
-                              className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                            >
-                              <circle
-                                className="opacity-25"
-                                cx="12"
-                                cy="12"
-                                r="10"
-                                stroke="currentColor"
-                                strokeWidth="4"
-                              ></circle>
-                              <path
-                                className="opacity-75"
-                                fill="currentColor"
-                                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                              ></path>
-                            </svg>
-                            Creating
-                          </>
-                        ) : (
-                          'Create Letter'
-                        )}
-                      </button>
-                      <button
-                        type="button"
-                        className="px-6 py-2 underline"
-                        onClick={() => setPopupStage('email')}
-                      >
-                        Back
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </>
-            ) : popupStage === 'link' ? (
-              <>
-                {/* Link Stage - Improved UI */}
-                <div className="flex flex-col items-center justify-center w-full h-full space-y-6">
-                  {/* Removed Your Letter Link Section */}
-                  {/* New Share with Dad Section */}
-                  // Replace this section in your link stage:
-<div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 mt-10">
-  <h2 className="text-black font-bold mb-4 text-[20px] text-center">
-    Share letter with your dad
-  </h2>
-  <div className="flex justify-center">
-    <button
-      className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/80 transition-colors duration-200"
-      onClick={async () => {
-        const shareText = `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`;
-        
-        if (navigator.share) {
-          try {
-            // First, try to share text and image together
-            const response = await fetch(fathersImage);
-            const blob = await response.blob();
-            const filesArray = [
-              new File([blob], 'Fathers Image.png', {
-                type: blob.type,
-              }),
-            ];
-            
-            // Check if browser supports sharing files
-            if (navigator.canShare && navigator.canShare({ files: filesArray })) {
-              try {
-                await navigator.share({
-                  title: 'Super Dad Letter',
-                  text: shareText,
-                  files: filesArray,
-                });
-                console.log('Share successful with both text and image');
-                return; // Success - exit function
-              } catch (fileShareError) {
-                console.log('Sharing with files failed, falling back to text only:', fileShareError);
-                // Continue to text-only sharing below
-              }
-            }
-            
-            // Fallback: Share text only (this should always work if navigator.share is supported)
-            await navigator.share({
-              title: 'Super Dad Letter',
-              text: shareText,
-            });
-            console.log('Share successful with text only');
-            
-          } catch (error) {
-            console.error('All sharing methods failed:', error);
-            // Final fallback: Copy to clipboard
-            try {
-              await navigator.clipboard.writeText(shareText);
-              toast.success('Link copied to clipboard! You can now paste it in any app to share with your dad.');
-            } catch (clipboardError) {
-              // Manual copy fallback for older browsers
-              const textArea = document.createElement('textarea');
-              textArea.value = shareText;
-              textArea.style.position = 'fixed';
-              textArea.style.opacity = '0';
-              document.body.appendChild(textArea);
-              textArea.focus();
-              textArea.select();
-              
-              try {
-                document.execCommand('copy');
-                toast.success('Link copied to clipboard! You can now paste it in any app to share with your dad.');
-              } catch (execError) {
-                toast.error('Unable to share or copy. Please manually copy this link: ' + letterLink);
-              } finally {
-                document.body.removeChild(textArea);
-              }
-            }
-          }
-        } else {
-          // Browser doesn't support Web Share API at all
-          try {
-            await navigator.clipboard.writeText(shareText);
-            toast.success('Link copied to clipboard! You can now paste it in any app to share with your dad.');
-          } catch (clipboardError) {
-            // Manual copy fallback
-            const textArea = document.createElement('textarea');
-            textArea.value = shareText;
-            textArea.style.position = 'fixed';
-            textArea.style.opacity = '0';
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            
-            try {
-              document.execCommand('copy');
-              toast.success('Link copied to clipboard! You can now paste it in any app to share with your dad.');
-            } catch (execError) {
-              toast.error('Unable to copy. Please manually copy this link: ' + letterLink);
-            } finally {
-              document.body.removeChild(textArea);
-            }
-          }
-        }
-      }}
-    >
-      Share
-    </button>
-  </div>
-</div>
-                </div>
-              </>
-            ) : null}
+                  </>
+                ) : null}
+              </div>
+            </div>
+          )}
+          <div className="fixed top-120 right-6 bg-[#ffffff] rounded-lg w-14 h-14 flex flex-col items-center justify-center shadow-lg z-50">
+            <span className="text-[#e63e21] font-bold text-xl leading-none">{letterCount}</span>
+            <span className="text-[#e63e21] text-[8px] leading-none">letters sent</span>
           </div>
-        </div>
-      )} 
-      <div className="fixed top-120 right-6 bg-[#ffffff] rounded-lg w-14 h-14 flex flex-col items-center justify-center shadow-lg z-50">
-        <span className="text-[#e63e21] font-bold text-xl leading-none">{letterCount}</span>
-        <span className="text-[#e63e21] text-[8px] leading-none">letters sent</span>
-      </div>
-      <ToastContainer />
+          <ToastContainer />
         </div>
       </div>
     );
@@ -514,7 +501,7 @@ const LandingPage = () => {
     return (
       <div className="w-full relative min-h-screen overflow-hidden text-white">
         <div className="video-background relative w-full h-screen overflow-hidden">
-<iframe width="806" height="453" src="https://www.youtube.com/embed/nOOyE9X3AAU?autoplay=1&mute=1" title="Super Dad Animation: How To Calm A Crying Baby (2025)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <iframe width="806" height="453" src="https://www.youtube.com/embed/nOOyE9X3AAU?autoplay=1&mute=1" title="Super Dad Animation: How To Calm A Crying Baby (2025)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
 
         {/* Content container */}
@@ -548,276 +535,319 @@ const LandingPage = () => {
           </div>
 
           {showEmailPopup && (
-        <div
-          className="fixed inset-0 bg-[#000000]/60 flex items-center justify-center z-60"
-          onClick={closeEmailPopup}
-        >
-          <div
-            className="bg-[#000000]/80 rounded-lg max-w-3xl w-full mx-4 flex overflow-hidden min-h-[600px]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {popupStage === 'email' ? (
-              <>
-                {/* Email Stage */}
-                <div className="flex w-full">
-                  <div className="w-1/2 p-6 flex flex-col justify-center ">
-                    <h2 className='text-white text-left font-bold mb-10 text-[20px]'>Create your Letter</h2>
-                    <h3 className="text-[15px] text-left font-regular mb-4 text-white">Enter your email</h3>
-                    <form onSubmit={handleEmailSubmit} className="w-full">
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={handleEmailChange}
-                        required
-                        placeholder="Your email"
-                        className="w-full p-3 border text-black bg-[#f2f2f2] border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-                      />
-                      <button
-                        type="submit"
-                        className="w-full mt-4 px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/50 transition-colors duration-200"
-                      >
-                        Submit
-                      </button>
-                    </form>
-                    <button
-                      onClick={closeEmailPopup}
-                      className="mt-4 text-white underline"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                  <div className="w-1/2 bg-cover bg-center" style={{ backgroundImage: "url('/src/assets/IMG_0234.JPG')" }}></div>
-                </div>
-              </>
-            ) : popupStage === 'letter' ? (
-              <>
-                {/* Letter Stage */}
-                <div className="flex flex-col items-center w-full p-6 max-h-[900px]">
-                  <div
-                    className="w-full h-full bg-cover bg-center mb-6"
-                    style={{ backgroundImage: "url('/src/assets/superdad.jpg')" }}
-                  ></div>
-                  <form
-                    className="w-full max-w-md"
-                    onSubmit={async (e) => {
-                      e.preventDefault();
-                      setIsLoading(true);
-                      setErrorMessage('');
-                      try {
-                        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/data`, {
-                          method: 'POST',
-                          headers: {
-                            'Content-Type': 'application/json',
-                          },
-                          body: JSON.stringify({
-                            email,
-                            letterTitle,
-                            letterBody,
-                            letterSender,
-                            sharePublicly,
-                          }),
-                        });
-                        if (!response.ok) {
-                          const errorData = await response.json();
-                          throw new Error(errorData.error || 'Failed to save letter');
-                        }
-                        const data = await response.json();
-                        // Use slug from response to generate link
-                        const generatedLink = `${import.meta.env.VITE_FRONTEND_URL}/letterview/${data.slug}`;
-                        setLetterSlug(data.slug);
-                        setLetterLink(generatedLink);
-                        setPopupStage('link');
-                      } catch (error) {
-                        setErrorMessage(error.message);
-                      } finally {
-                        setIsLoading(false);
-                      }
-                    }}
-                  >
-                    <div className="flex space-x-4 mb-4">
-                      <div className="flex-1">
-                        <label className="block mb-2 font-regular text-[12px] text-white text-left" htmlFor="title">
-                          Title of the letter
-                        </label>
-                        <input
-                          id="title"
-                          type="text"
-                          value={letterTitle}
-                          onChange={(e) => setLetterTitle(e.target.value)}
-                          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-                          placeholder="Enter the title"
-                          required
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <label className="block mb-2 font-regular text-[12px] text-white text-left" htmlFor="sender">
-                          Name of sender
-                        </label>
-                        <input
-                          id="sender"
-                          type="text"
-                          value={letterSender}
-                          onChange={(e) => setLetterSender(e.target.value)}
-                          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-                          placeholder="Enter your name"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <label className="block mb-2 ffont-regular text-[12px] text-white text-left" htmlFor="body">
-                      Body of the letter
-                    </label>
-                    <textarea
-                      id="body"
-                      value={letterBody}
-                      onChange={(e) => {
-                        const text = e.target.value;
-                        const words = text.trim().split(/\s+/).filter(Boolean);
-                        if (words.length <= 130) {
-                          setLetterBody(text);
-                          setBodyWordCount(words.length);
-                        } else {
-                          const limitedText = words.slice(0, 130).join(' ');
-                          setLetterBody(limitedText);
-                          setBodyWordCount(130);
-                        }
-                      }}
-                      className="w-full p-3 mb-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-                      placeholder="Write your letter here (max 130 words)"
-                      rows={15}
-                      maxLength={3000}
-                      required
-                    />
-                    <div className="mb-4">
-                      <div className="text-sm text-gray-600 mb-2 text-center">
-                        Words remaining: {130 - bodyWordCount}
-                      </div>
-                      <div className="text-sm text-white flex items-center justify-center space-x-4">
-                        <span>Can we share your letter on our social media?</span>
-                        <label className="flex items-center space-x-1">
+            <div
+              className="fixed inset-0 bg-[#000000]/60 flex items-center justify-center z-60"
+              onClick={closeEmailPopup}
+            >
+              <div
+                className="bg-[#000000]/80 rounded-lg max-w-3xl w-full mx-4 flex overflow-hidden min-h-[600px]"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {popupStage === 'email' ? (
+                  <>
+                    {/* Email Stage */}
+                    <div className="flex w-full">
+                      <div className="w-1/2 p-6 flex flex-col justify-center ">
+                        <h2 className='text-white text-left font-bold mb-10 text-[20px]'>Create your Letter</h2>
+                        <h3 className="text-[15px] text-left font-regular mb-4 text-white">Enter your email</h3>
+                        <form onSubmit={handleEmailSubmit} className="w-full">
                           <input
-                            type="radio"
-                            name="sharePublicly"
-                            value="yes"
-                            checked={sharePublicly === 'yes'}
-                            onChange={(e) => setSharePublicly(e.target.value)}
+                            type="email"
+                            value={email}
+                            onChange={handleEmailChange}
                             required
-                            className="accent-[#e63e21]"
+                            placeholder="Your email"
+                            className="w-full p-3 border text-black bg-[#f2f2f2] border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
                           />
-                          <span>Yes</span>
-                        </label>
-                        <label className="flex items-center space-x-1">
-                          <input
-                            type="radio"
-                            name="sharePublicly"
-                            value="no"
-                            checked={sharePublicly === 'no'}
-                            onChange={(e) => setSharePublicly(e.target.value)}
-                            required
-                            className="accent-[#e63e21]"
-                          />
-                          <span>No</span>
-                        </label>
+                          <button
+                            type="submit"
+                            className="w-full mt-4 px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/50 transition-colors duration-200"
+                          >
+                            Submit
+                          </button>
+                        </form>
+                        <button
+                          onClick={closeEmailPopup}
+                          className="mt-4 text-white underline"
+                        >
+                          Cancel
+                        </button>
                       </div>
+                      <div className="w-1/2 bg-cover bg-center" style={{ backgroundImage: "url('/src/assets/IMG_0234.JPG')" }}></div>
                     </div>
-                    <div className="flex justify-between">
-                      <button
-                        type="submit"
-                        className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/50 transition-colors duration-200 flex items-center justify-center"
-                        disabled={isLoading}
-                      >
-                        {isLoading ? (
-                          <>
-                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-                            </svg>
-                            Creating
-                          </>
-                        ) : (
-                          'Create Letter'
-                        )}
-                      </button>
-                      <button
-                        type="button"
-                        className="px-6 py-2 underline"
-                        onClick={() => setPopupStage('email')}
-                      >
-                        Back
-                      </button>
-                    </div>
-                    {errorMessage && (
-                      <div className="text-red-500 text-center mt-2">
-                        {errorMessage}
-                      </div>
-                    )}
-                  </form>
-                </div>
-              </>
-            ) : popupStage === 'link' ? (
-              <>
-                {/* Link Stage - Improved UI */}
-                <div className="flex flex-col items-center justify-center w-full h-full space-y-6">
-                  {/* Removed Your Letter Link Section */}
-
-                  {/* New Share with Dad Section */}
-                  <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 mt-50">
-                    <h2 className="text-black font-bold mb-4 text-[20px] text-center">Share letter with your dad</h2>
-                    <div className="flex justify-center">
-                      <button
-                        className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/80 transition-colors duration-200"
-                        onClick={async () => {
-                          if (navigator.share) {
-                            try {
-                              // First try sharing with files
-                              const response = await fetch(fathersImage);
-                              const blob = await response.blob();
-                              const filesArray = [
-                                new File([blob], 'Fathers Image.png', {
-                                  type: blob.type,
-                                }),
-                              ];
-                              await navigator.share({
-                                title: 'Super Dad Letter',
-                                text: `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`,
-                                files: filesArray,
-                              });
-                              console.log('Share successful with files');
-                            } catch (error) {
-                              console.error('Error sharing with files:', error);
-                              toast.error('Error sharing with image file: ' + error.message);
-                              // Try sharing without files as fallback
-                              try {
-                                await navigator.share({
-                                  title: 'Super Dad Letter',
-                                  text: `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`,
-                                });
-                                console.log('Share successful without files');
-                              } catch (err) {
-                                console.error('Error sharing without files:', err);
-                                toast.error('Error sharing: ' + err.message);
-                              }
+                  </>
+                ) : popupStage === 'letter' ? (
+                  <>
+                    {/* Letter Stage */}
+                    <div className="flex flex-col items-center w-full p-6 max-h-[900px]">
+                      <div
+                        className="w-full h-full bg-cover bg-center mb-6"
+                        style={{ backgroundImage: "url('/src/assets/superdad.jpg')" }}
+                      ></div>
+                      <form
+                        className="w-full max-w-md"
+                        onSubmit={async (e) => {
+                          e.preventDefault();
+                          setIsLoading(true);
+                          setErrorMessage('');
+                          try {
+                            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/data`, {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({
+                                email,
+                                letterTitle,
+                                letterBody,
+                                letterSender,
+                                sharePublicly,
+                              }),
+                            });
+                            if (!response.ok) {
+                              const errorData = await response.json();
+                              throw new Error(errorData.error || 'Failed to save letter');
                             }
-                          } else {
-                            toast.info('Sharing not supported on this device');
+                            const data = await response.json();
+                            // Use slug from response to generate link
+                            const generatedLink = `${import.meta.env.VITE_FRONTEND_URL}/letterview/${data.slug}`;
+                            setLetterSlug(data.slug);
+                            setLetterLink(generatedLink);
+                            setPopupStage('link');
+                          } catch (error) {
+                            setErrorMessage(error.message);
+                          } finally {
+                            setIsLoading(false);
                           }
                         }}
                       >
-                        Share
-                      </button>
+                        <div className="flex space-x-4 mb-4">
+                          <div className="flex-1">
+                            <label className="block mb-2 font-regular text-[12px] text-white text-left" htmlFor="title">
+                              Title of the letter
+                            </label>
+                            <input
+                              id="title"
+                              type="text"
+                              value={letterTitle}
+                              onChange={(e) => setLetterTitle(e.target.value)}
+                              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                              placeholder="Enter the title"
+                              required
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <label className="block mb-2 font-regular text-[12px] text-white text-left" htmlFor="sender">
+                              Name of sender
+                            </label>
+                            <input
+                              id="sender"
+                              type="text"
+                              value={letterSender}
+                              onChange={(e) => setLetterSender(e.target.value)}
+                              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                              placeholder="Enter your name"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <label className="block mb-2 ffont-regular text-[12px] text-white text-left" htmlFor="body">
+                          Body of the letter
+                        </label>
+                        <textarea
+                          id="body"
+                          value={letterBody}
+                          onChange={(e) => {
+                            const text = e.target.value;
+                            const words = text.trim().split(/\s+/).filter(Boolean);
+                            if (words.length <= 130) {
+                              setLetterBody(text);
+                              setBodyWordCount(words.length);
+                            } else {
+                              const limitedText = words.slice(0, 130).join(' ');
+                              setLetterBody(limitedText);
+                              setBodyWordCount(130);
+                            }
+                          }}
+                          className="w-full p-3 mb-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                          placeholder="Write your letter here (max 130 words)"
+                          rows={15}
+                          maxLength={3000}
+                          required
+                        />
+                        <div className="mb-4">
+                          <div className="text-sm text-gray-600 mb-2 text-center">
+                            Words remaining: {130 - bodyWordCount}
+                          </div>
+                          <div className="text-sm text-white flex items-center justify-center space-x-4">
+                            <span>Can we share your letter on our social media?</span>
+                            <label className="flex items-center space-x-1">
+                              <input
+                                type="radio"
+                                name="sharePublicly"
+                                value="yes"
+                                checked={sharePublicly === 'yes'}
+                                onChange={(e) => setSharePublicly(e.target.value)}
+                                required
+                                className="accent-[#e63e21]"
+                              />
+                              <span>Yes</span>
+                            </label>
+                            <label className="flex items-center space-x-1">
+                              <input
+                                type="radio"
+                                name="sharePublicly"
+                                value="no"
+                                checked={sharePublicly === 'no'}
+                                onChange={(e) => setSharePublicly(e.target.value)}
+                                required
+                                className="accent-[#e63e21]"
+                              />
+                              <span>No</span>
+                            </label>
+                          </div>
+                        </div>
+                        <div className="flex justify-between">
+                          <button
+                            type="submit"
+                            className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/50 transition-colors duration-200 flex items-center justify-center"
+                            disabled={isLoading}
+                          >
+                            {isLoading ? (
+                              <>
+                                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                                </svg>
+                                Creating
+                              </>
+                            ) : (
+                              'Create Letter'
+                            )}
+                          </button>
+                          <button
+                            type="button"
+                            className="px-6 py-2 underline"
+                            onClick={() => setPopupStage('email')}
+                          >
+                            Back
+                          </button>
+                        </div>
+                        {errorMessage && (
+                          <div className="text-red-500 text-center mt-2">
+                            {errorMessage}
+                          </div>
+                        )}
+                      </form>
                     </div>
-                  </div>
-                </div>
-              </>
-            ) : null}
+                  </>
+                ) : popupStage === 'link' ? (
+                  <>
+                    {/* Link Stage - Improved UI */}
+                    <div className="flex flex-col items-center justify-center w-full h-full space-y-6">
+                      {/* Removed Your Letter Link Section */}
+
+                      {/* New Share with Dad Section */}
+                      <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 mt-10">
+                        <h2 className="text-black font-bold mb-4 text-[20px] text-center">
+                          Share letter with your dad
+                        </h2>
+                        <div className="flex flex-col items-center space-y-3">
+                          <button
+                            className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/80 transition-colors duration-200"
+                            onClick={async () => {
+                              const shareText = `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`;
+
+                              if (navigator.share) {
+                                try {
+                                  await navigator.share({
+                                    title: 'Super Dad Letter',
+                                    text: shareText,
+                                  });
+                                  console.log('Share successful');
+                                } catch (error) {
+                                  console.error('Error sharing:', error);
+                                  // Fallback to clipboard if share fails
+                                  try {
+                                    await navigator.clipboard.writeText(shareText);
+                                    toast.success('Link copied to clipboard! You can now paste it to share with your dad.');
+                                  } catch (clipboardError) {
+                                    toast.error('Unable to share. Please copy this link manually: ' + letterLink);
+                                  }
+                                }
+                              } else {
+                                // Browser doesn't support Web Share API, copy to clipboard
+                                try {
+                                  await navigator.clipboard.writeText(shareText);
+                                  toast.success('Link copied to clipboard! You can now paste it to share with your dad.');
+                                } catch (clipboardError) {
+                                  // Final fallback for very old browsers
+                                  const textArea = document.createElement('textarea');
+                                  textArea.value = shareText;
+                                  textArea.style.position = 'fixed';
+                                  textArea.style.opacity = '0';
+                                  document.body.appendChild(textArea);
+                                  textArea.focus();
+                                  textArea.select();
+
+                                  try {
+                                    document.execCommand('copy');
+                                    toast.success('Link copied to clipboard! You can now paste it to share with your dad.');
+                                  } catch (execError) {
+                                    toast.error('Unable to copy. Please manually copy this link: ' + letterLink);
+                                  } finally {
+                                    document.body.removeChild(textArea);
+                                  }
+                                }
+                              }
+                            }}
+                          >
+                            Share
+                          </button>
+
+                          <button
+                            className="px-6 py-2 text-gray-500"
+                            onClick={async () => {
+                              const copyText = `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`;
+                              try {
+                                await navigator.clipboard.writeText(copyText);
+                                toast.success('Link copied to clipboard!');
+                              } catch (clipboardError) {
+                                // Fallback for browsers that don't support clipboard API
+                                const textArea = document.createElement('textarea');
+                                textArea.value = letterLink;
+                                textArea.style.position = 'fixed';
+                                textArea.style.opacity = '0';
+                                document.body.appendChild(textArea);
+                                textArea.focus();
+                                textArea.select();
+
+                                try {
+                                  document.execCommand('copy');
+                                  toast.success('Link copied to clipboard!');
+                                } catch (execError) {
+                                  toast.error('Unable to copy. Please manually copy this link: ' + letterLink);
+                                } finally {
+                                  document.body.removeChild(textArea);
+                                }
+                              }
+                            }}
+                          >
+                            Copy Link
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : null}
+              </div>
+            </div>
+          )}
+          <div className="fixed top-120 right-6 bg-[#ffffff] rounded-lg w-14 h-14 flex flex-col items-center justify-center shadow-lg z-50">
+            <span className="text-[#e63e21] font-bold text-xl leading-none">{letterCount}</span>
+            <span className="text-[#e63e21] text-[8px] leading-none">letters sent</span>
           </div>
-        </div>
-      )} 
-      <div className="fixed top-120 right-6 bg-[#ffffff] rounded-lg w-14 h-14 flex flex-col items-center justify-center shadow-lg z-50">
-        <span className="text-[#e63e21] font-bold text-xl leading-none">{letterCount}</span>
-        <span className="text-[#e63e21] text-[8px] leading-none">letters sent</span>
-      </div>
-      <ToastContainer />
+          <ToastContainer />
         </div>
       </div>
     );
@@ -827,7 +857,7 @@ const LandingPage = () => {
   return (
     <div className="w-full relative min-h-screen overflow-hidden text-white">
       <div className="video-background relative w-full h-screen overflow-hidden">
-      <iframe width="791" height="445" src="https://www.youtube.com/embed/nOOyE9X3AAU?autoplay=1&mute=1" title="Super Dad Animation: How To Calm A Crying Baby (2025)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <iframe width="791" height="445" src="https://www.youtube.com/embed/nOOyE9X3AAU?autoplay=1&mute=1" title="Super Dad Animation: How To Calm A Crying Baby (2025)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
 
       {/* Content container */}
@@ -1069,58 +1099,101 @@ const LandingPage = () => {
                   {/* Removed Your Letter Link Section */}
 
                   {/* New Share with Dad Section */}
-                  <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 mt-50">
-                    <h2 className="text-black font-bold mb-4 text-[20px] text-center">Share letter with your dad</h2>
-                    <div className="flex justify-center">
-                      <button
-                        className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/80 transition-colors duration-200"
-                        onClick={async () => {
-                          if (navigator.share) {
-                            try {
-                              // First try sharing with files
-                              const response = await fetch(fathersImage);
-                              const blob = await response.blob();
-                              const filesArray = [
-                                new File([blob], 'Fathers Image.png', {
-                                  type: blob.type,
-                                }),
-                              ];
-                              await navigator.share({
-                                title: 'Super Dad Letter',
-                                text: `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`,
-                                files: filesArray,
-                              });
-                              console.log('Share successful with files');
-                            } catch (error) {
-                              console.error('Error sharing with files:', error);
-                              toast.error('Error sharing with image file: ' + error.message);
-                              // Try sharing without files as fallback
-                              try {
-                                await navigator.share({
-                                  title: 'Super Dad Letter',
-                                  text: `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`,
-                                });
-                                console.log('Share successful without files');
-                              } catch (err) {
-                                console.error('Error sharing without files:', err);
-                                toast.error('Error sharing: ' + err.message);
+                  <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 mt-10">
+                        <h2 className="text-black font-bold mb-4 text-[20px] text-center">
+                          Share letter with your dad
+                        </h2>
+                        <div className="flex flex-col items-center space-y-3">
+                          <button
+                            className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/80 transition-colors duration-200"
+                            onClick={async () => {
+                              const shareText = `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`;
+
+                              if (navigator.share) {
+                                try {
+                                  await navigator.share({
+                                    title: 'Super Dad Letter',
+                                    text: shareText,
+                                  });
+                                  console.log('Share successful');
+                                } catch (error) {
+                                  console.error('Error sharing:', error);
+                                  // Fallback to clipboard if share fails
+                                  try {
+                                    await navigator.clipboard.writeText(shareText);
+                                    toast.success('Link copied to clipboard! You can now paste it to share with your dad.');
+                                  } catch (clipboardError) {
+                                    toast.error('Unable to share. Please copy this link manually: ' + letterLink);
+                                  }
+                                }
+                              } else {
+                                // Browser doesn't support Web Share API, copy to clipboard
+                                try {
+                                  await navigator.clipboard.writeText(shareText);
+                                  toast.success('Link copied to clipboard! You can now paste it to share with your dad.');
+                                } catch (clipboardError) {
+                                  // Final fallback for very old browsers
+                                  const textArea = document.createElement('textarea');
+                                  textArea.value = shareText;
+                                  textArea.style.position = 'fixed';
+                                  textArea.style.opacity = '0';
+                                  document.body.appendChild(textArea);
+                                  textArea.focus();
+                                  textArea.select();
+
+                                  try {
+                                    document.execCommand('copy');
+                                    toast.success('Link copied to clipboard! You can now paste it to share with your dad.');
+                                  } catch (execError) {
+                                    toast.error('Unable to copy. Please manually copy this link: ' + letterLink);
+                                  } finally {
+                                    document.body.removeChild(textArea);
+                                  }
+                                }
                               }
-                            }
-                          } else {
-                            toast.info('Sharing not supported on this device');
-                          }
-                        }}
-                      >
-                        Share
-                      </button>
-                    </div>
-                  </div>
+                            }}
+                          >
+                            Share
+                          </button>
+
+                          <button
+                            className="px-6 py-2 text-gray-500"
+                            onClick={async () => {
+                              const copyText = `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`;
+                              try {
+                                await navigator.clipboard.writeText(copyText);
+                                toast.success('Link copied to clipboard!');
+                              } catch (clipboardError) {
+                                // Fallback for browsers that don't support clipboard API
+                                const textArea = document.createElement('textarea');
+                                textArea.value = letterLink;
+                                textArea.style.position = 'fixed';
+                                textArea.style.opacity = '0';
+                                document.body.appendChild(textArea);
+                                textArea.focus();
+                                textArea.select();
+
+                                try {
+                                  document.execCommand('copy');
+                                  toast.success('Link copied to clipboard!');
+                                } catch (execError) {
+                                  toast.error('Unable to copy. Please manually copy this link: ' + letterLink);
+                                } finally {
+                                  document.body.removeChild(textArea);
+                                }
+                              }
+                            }}
+                          >
+                            Copy Link
+                          </button>
+                        </div>
+                      </div>
                 </div>
               </>
             ) : null}
           </div>
         </div>
-      )} 
+      )}
       <div className="fixed top-120 right-6 bg-[#ffffff] rounded-lg w-14 h-14 flex flex-col items-center justify-center shadow-lg z-50">
         <span className="text-[#e63e21] font-bold text-xl leading-none">{letterCount}</span>
         <span className="text-[#e63e21] text-[8px] leading-none">letters sent</span>
