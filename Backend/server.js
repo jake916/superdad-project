@@ -11,7 +11,14 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/superdad';
 
-app.use(cors());
+const corsOptions = {
+  origin: ['https://superdad-project.onrender.com', 'http://localhost:5173'], // Add your frontend URLs here
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Serve frontend static files

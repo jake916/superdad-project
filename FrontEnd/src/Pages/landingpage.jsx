@@ -70,7 +70,8 @@ const LandingPage = () => {
       try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/data/count`);
         if (!response.ok) {
-          throw new Error('Failed to fetch letter count');
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to fetch letter count');
         }
         const data = await response.json();
         setLetterCount(data.count);
@@ -243,12 +244,12 @@ const LandingPage = () => {
                         setLetterLink(generatedLink);
                         setPopupStage('link');
                       } catch (error) {
-                        setErrorMessage(error.message);
-                      } finally {
-                        setIsLoading(false);
-                      }
-                    }}
-                  >
+                      setErrorMessage(error.message);
+                    } finally {
+                      setIsLoading(false);
+                    }
+                  }}
+                >
                     <div className="flex flex-col space-y-4 mb-4">
                       <div>
                         <label
@@ -703,6 +704,11 @@ const LandingPage = () => {
                         Back
                       </button>
                     </div>
+                    {errorMessage && (
+                      <div className="text-red-500 text-center mt-2">
+                        {errorMessage}
+                      </div>
+                    )}
                   </form>
                 </div>
               </>
