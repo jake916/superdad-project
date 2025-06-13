@@ -5,6 +5,7 @@ import logo from '../assets/Untitled-1.png';
 import shareImage from '../assets/Super Dad letter template.png';
 
 const LandingPage = () => {
+  console.log('Backend URL:', import.meta.env.VITE_BACKEND_URL);
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showEmailPopup, setShowEmailPopup] = useState(false);
