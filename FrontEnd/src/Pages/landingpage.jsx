@@ -121,14 +121,7 @@ const LandingPage = () => {
     return (
       <div className="w-full relative min-h-screen overflow-hidden text-white">
         <div className="video-background relative w-full aspect-[9/16] overflow-hidden">
-          <iframe
-            src="https://www.youtube.com/embed/G5_AChAu8X4?autoplay=1&mute=1&loop=1&playlist=G5_AChAu8X4&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3"
-            title="YouTube video background"
-            frameBorder="0"
-            allow="autoplay; encrypted-media"
-            allowFullScreen
-            className="absolute top-0 left-0 w-full h-full object-cover"
-          ></iframe>
+        <iframe width="full" height="full" src="https://www.youtube.com/embed/nOOyE9X3AAU?autoplay=1&mute=1" title="Super Dad Animation: How To Calm A Crying Baby (2025)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ></iframe>
         </div>
 
         {/* Content container */}
@@ -407,35 +400,35 @@ const LandingPage = () => {
                         className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/80 transition-colors duration-200"
                         onClick={async () => {
                           if (navigator.share) {
+                            // Function to detect if browser supports sharing files with text
+                            const canShareFilesWithText = (navigator.canShare && navigator.canShare({ files: [new File([''], 'test.txt')] })) || false;
                             try {
-                              // First try sharing with files
-                              const response = await fetch(fathersImage);
-                              const blob = await response.blob();
-                              const filesArray = [
-                                new File([blob], 'Fathers Image.png', {
-                                  type: blob.type,
-                                }),
-                              ];
-                              await navigator.share({
-                                title: 'Super Dad Letter',
-                                text: `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`,
-                                files: filesArray,
-                              });
-                              console.log('Share successful with files');
-                            } catch (error) {
-                              console.error('Error sharing with files:', error);
-                              toast.error('Error sharing with image file: ' + error.message);
-                              // Try sharing without files as fallback
-                              try {
+                              if (canShareFilesWithText) {
+                                // Share both files and text
+                                const response = await fetch(fathersImage);
+                                const blob = await response.blob();
+                                const filesArray = [
+                                  new File([blob], 'Fathers Image.png', {
+                                    type: blob.type,
+                                  }),
+                                ];
+                                await navigator.share({
+                                  title: 'Super Dad Letter',
+                                  text: `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`,
+                                  files: filesArray,
+                                });
+                                console.log('Share successful with files');
+                              } else {
+                                // Share only text if files with text not supported
                                 await navigator.share({
                                   title: 'Super Dad Letter',
                                   text: `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`,
                                 });
-                                console.log('Share successful without files');
-                              } catch (err) {
-                                console.error('Error sharing without files:', err);
-                                toast.error('Error sharing: ' + err.message);
+                                console.log('Share successful with text only');
                               }
+                            } catch (error) {
+                              console.error('Error sharing:', error);
+                              toast.error('Error sharing: ' + error.message);
                             }
                           } else {
                             toast.info('Sharing not supported on this device');
@@ -467,14 +460,7 @@ const LandingPage = () => {
     return (
       <div className="w-full relative min-h-screen overflow-hidden text-white">
         <div className="video-background relative w-full h-screen overflow-hidden">
-          <iframe
-            src="https://www.youtube.com/embed/G5_AChAu8X4?autoplay=1&mute=1&loop=1&playlist=G5_AChAu8X4&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3"
-            title="YouTube video background"
-            frameBorder="0"
-            allow="autoplay; encrypted-media"
-            allowFullScreen
-            className="absolute top-0 left-0 w-full h-full object-cover"
-          ></iframe>
+<iframe width="806" height="453" src="https://www.youtube.com/embed/nOOyE9X3AAU?autoplay=1&mute=1" title="Super Dad Animation: How To Calm A Crying Baby (2025)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
 
         {/* Content container */}
@@ -787,14 +773,7 @@ const LandingPage = () => {
   return (
     <div className="w-full relative min-h-screen overflow-hidden text-white">
       <div className="video-background relative w-full h-screen overflow-hidden">
-        <iframe
-          src="https://www.youtube.com/embed/G5_AChAu8X4?autoplay=1&mute=1&loop=1&playlist=G5_AChAu8X4&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3"
-          title="YouTube video background"
-          frameBorder="0"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-          className="absolute top-0 left-0 w-full h-full object-cover"
-        ></iframe>
+      <iframe width="791" height="445" src="https://www.youtube.com/embed/nOOyE9X3AAU?autoplay=1&mute=1" title="Super Dad Animation: How To Calm A Crying Baby (2025)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
 
       {/* Content container */}
