@@ -47,7 +47,7 @@ function LetterView() {
   useEffect(() => {
     async function fetchLetter() {
       try {
-        const response = await fetch('http://localhost:5000/data/' + slug);
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/data/` + slug);
         if (!response.ok) {
           throw new Error('Letter not found');
         }

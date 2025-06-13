@@ -67,7 +67,7 @@ const LandingPage = () => {
     // Fetch letter count from backend
     const fetchLetterCount = async () => {
       try {
-        const response = await fetch('https://superdad-backendproject.onrender.com/data/count');
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/data/count`);
         if (!response.ok) {
           throw new Error('Failed to fetch letter count');
         }
@@ -218,7 +218,7 @@ const LandingPage = () => {
                       setIsLoading(true);
                       setErrorMessage('');
                       try {
-                        const response = await fetch('http://localhost:5000/data', {
+                        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/data`, {
                           method: 'POST',
                           headers: {
                             'Content-Type': 'application/json',
@@ -237,7 +237,7 @@ const LandingPage = () => {
                         }
                         const data = await response.json();
                         // Use slug from response to generate link
-                        const generatedLink = `http://localhost:5173/letterview/${data.slug}`;
+                        const generatedLink = `${import.meta.env.VITE_FRONTEND_URL}/letterview/${data.slug}`;
                         setLetterSlug(data.slug);
                         setLetterLink(generatedLink);
                         setPopupStage('link');
