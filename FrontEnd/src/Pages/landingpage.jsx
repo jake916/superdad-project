@@ -391,54 +391,108 @@ const LandingPage = () => {
                 <div className="flex flex-col items-center justify-center w-full h-full space-y-6">
                   {/* Removed Your Letter Link Section */}
                   {/* New Share with Dad Section */}
-                  <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 mt-10">
-                    <h2 className="text-black font-bold mb-4 text-[20px] text-center">
-                      Share letter with your dad
-                    </h2>
-                    <div className="flex justify-center">
-                      <button
-                        className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/80 transition-colors duration-200"
-                        onClick={async () => {
-                          if (navigator.share) {
-                            // Function to detect if browser supports sharing files with text
-                            const canShareFilesWithText = (navigator.canShare && navigator.canShare({ files: [new File([''], 'test.txt')] })) || false;
-                            try {
-                              if (canShareFilesWithText) {
-                                // Share both files and text
-                                const response = await fetch(fathersImage);
-                                const blob = await response.blob();
-                                const filesArray = [
-                                  new File([blob], 'Fathers Image.png', {
-                                    type: blob.type,
-                                  }),
-                                ];
-                                await navigator.share({
-                                  title: 'Super Dad Letter',
-                                  text: `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`,
-                                  files: filesArray,
-                                });
-                                console.log('Share successful with files');
-                              } else {
-                                // Share only text if files with text not supported
-                                await navigator.share({
-                                  title: 'Super Dad Letter',
-                                  text: `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`,
-                                });
-                                console.log('Share successful with text only');
-                              }
-                            } catch (error) {
-                              console.error('Error sharing:', error);
-                              toast.error('Error sharing: ' + error.message);
-                            }
-                          } else {
-                            toast.info('Sharing not supported on this device');
-                          }
-                        }}
-                      >
-                        Share
-                      </button>
-                    </div>
-                  </div>
+                  // Replace this section in your link stage:
+<div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 mt-10">
+  <h2 className="text-black font-bold mb-4 text-[20px] text-center">
+    Share letter with your dad
+  </h2>
+  <div className="flex justify-center">
+    <button
+      className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/80 transition-colors duration-200"
+      onClick={async () => {
+        const shareText = `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`;
+        
+        if (navigator.share) {
+          try {
+            // First, try to share text and image together
+            const response = await fetch(fathersImage);
+            const blob = await response.blob();
+            const filesArray = [
+              new File([blob], 'Fathers Image.png', {
+                type: blob.type,
+              }),
+            ];
+            
+            // Check if browser supports sharing files
+            if (navigator.canShare && navigator.canShare({ files: filesArray })) {
+              try {
+                await navigator.share({
+                  title: 'Super Dad Letter',
+                  text: shareText,
+                  files: filesArray,
+                });
+                console.log('Share successful with both text and image');
+                return; // Success - exit function
+              } catch (fileShareError) {
+                console.log('Sharing with files failed, falling back to text only:', fileShareError);
+                // Continue to text-only sharing below
+              }
+            }
+            
+            // Fallback: Share text only (this should always work if navigator.share is supported)
+            await navigator.share({
+              title: 'Super Dad Letter',
+              text: shareText,
+            });
+            console.log('Share successful with text only');
+            
+          } catch (error) {
+            console.error('All sharing methods failed:', error);
+            // Final fallback: Copy to clipboard
+            try {
+              await navigator.clipboard.writeText(shareText);
+              toast.success('Link copied to clipboard! You can now paste it in any app to share with your dad.');
+            } catch (clipboardError) {
+              // Manual copy fallback for older browsers
+              const textArea = document.createElement('textarea');
+              textArea.value = shareText;
+              textArea.style.position = 'fixed';
+              textArea.style.opacity = '0';
+              document.body.appendChild(textArea);
+              textArea.focus();
+              textArea.select();
+              
+              try {
+                document.execCommand('copy');
+                toast.success('Link copied to clipboard! You can now paste it in any app to share with your dad.');
+              } catch (execError) {
+                toast.error('Unable to share or copy. Please manually copy this link: ' + letterLink);
+              } finally {
+                document.body.removeChild(textArea);
+              }
+            }
+          }
+        } else {
+          // Browser doesn't support Web Share API at all
+          try {
+            await navigator.clipboard.writeText(shareText);
+            toast.success('Link copied to clipboard! You can now paste it in any app to share with your dad.');
+          } catch (clipboardError) {
+            // Manual copy fallback
+            const textArea = document.createElement('textarea');
+            textArea.value = shareText;
+            textArea.style.position = 'fixed';
+            textArea.style.opacity = '0';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+              document.execCommand('copy');
+              toast.success('Link copied to clipboard! You can now paste it in any app to share with your dad.');
+            } catch (execError) {
+              toast.error('Unable to copy. Please manually copy this link: ' + letterLink);
+            } finally {
+              document.body.removeChild(textArea);
+            }
+          }
+        }
+      }}
+    >
+      Share
+    </button>
+  </div>
+</div>
                 </div>
               </>
             ) : null}
