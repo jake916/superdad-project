@@ -200,10 +200,10 @@ const LandingPage = () => {
                     Cancel
                   </button>
                 </div>
-                <div
-                  className="w-full sm:w-1/2 bg-cover bg-center h-48 sm:h-auto rounded-md mt-4 sm:mt-0"
-                  style={{ backgroundImage: "url('/src/assets/IMG_0234.JPG')" }}
-                ></div>
+                  <div
+                    className="w-full sm:w-1/2 bg-cover bg-center h-48 sm:h-auto rounded-md mt-4 sm:mt-0"
+                    style={{ backgroundImage: `url(${require('../assets/IMG_0234.JPG')})` }}
+                  ></div>
               </>
             ) : popupStage === 'letter' ? (
               <>
@@ -211,7 +211,7 @@ const LandingPage = () => {
                 <div className="flex flex-col items-center w-full p-4 sm:p-6 max-h-[80vh] overflow-auto">
                   <div
                     className="w-full h-48 sm:h-auto bg-cover bg-center mb-4 rounded-md"
-                    style={{ backgroundImage: "url('/src/assets/superdad.jpg')" }}
+                    style={{ backgroundImage: `url(${require('../assets/superdad.jpg')})` }}
                   ></div>
                   <form
                     className="w-full max-w-md"
