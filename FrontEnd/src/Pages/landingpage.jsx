@@ -407,10 +407,10 @@ const LandingPage = () => {
                           if (navigator.share) {
                             try {
                               // First try sharing with files
-                              const response = await fetch(shareImage);
+                              const response = await fetch('/assets/Fathers day campaign (Shareed post).png');
                               const blob = await response.blob();
                               const filesArray = [
-                                new File([blob], 'SuperDadLetter.png', {
+                                new File([blob], 'Fathers day campaign (Shareed post).png', {
                                   type: blob.type,
                                 }),
                               ];
@@ -767,47 +767,6 @@ const LandingPage = () => {
                   </div>
                 </div>
               </>
-            ) : popupStage === 'link' ? (
-              <>
-                {/* Link Stage - Improved UI */}
-                <div className="flex flex-col items-center justify-center w-full h-full space-y-6">
-                  {/* Removed Your Letter Link Section */}
-
-                  {/* New Share with Dad Section */}
-                  <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 mt-50">
-                    <h2 className="text-black font-bold mb-4 text-[20px] text-center">Share letter with your dad</h2>
-                    <div className="flex justify-center">
-                      <button
-                        className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/80 transition-colors duration-200"
-                        onClick={async () => {
-                          if (navigator.share) {
-                            try {
-                              const response = await fetch(shareImage);
-                              const blob = await response.blob();
-                              const filesArray = [
-                                new File([blob], 'SuperDadLetter.png', {
-                                  type: blob.type,
-                                }),
-                              ];
-                              await navigator.share({
-                                title: 'Super Dad Letter',
-                                text: `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`,
-                                files: filesArray,
-                              });
-                            } catch (error) {
-                              toast.error('Error sharing: ' + error.message);
-                            }
-                          } else {
-                            toast.info('Sharing not supported on this device');
-                          }
-                        }}
-                      >
-                        Share
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </>
             ) : null}
           </div>
         </div>
@@ -1111,47 +1070,6 @@ const LandingPage = () => {
                                 console.error('Error sharing without files:', err);
                                 toast.error('Error sharing: ' + err.message);
                               }
-                            }
-                          } else {
-                            toast.info('Sharing not supported on this device');
-                          }
-                        }}
-                      >
-                        Share
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </>
-            ) : popupStage === 'link' ? (
-              <>
-                {/* Link Stage - Improved UI */}
-                <div className="flex flex-col items-center justify-center w-full h-full space-y-6">
-                  {/* Removed Your Letter Link Section */}
-
-                  {/* New Share with Dad Section */}
-                  <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 mt-50">
-                    <h2 className="text-black font-bold mb-4 text-[20px] text-center">Share letter with your dad</h2>
-                    <div className="flex justify-center">
-                      <button
-                        className="px-6 py-2 bg-[#e63e21] text-white rounded-md hover:bg-[#e63e21]/80 transition-colors duration-200"
-                        onClick={async () => {
-                          if (navigator.share) {
-                            try {
-                              const response = await fetch(shareImage);
-                              const blob = await response.blob();
-                              const filesArray = [
-                                new File([blob], 'SuperDadLetter.png', {
-                                  type: blob.type,
-                                }),
-                              ];
-                              await navigator.share({
-                                title: 'Super Dad Letter',
-                                text: `Hi dad I just sent you a letter, kindly click on this link ${letterLink} to read the letter`,
-                                files: filesArray,
-                              });
-                            } catch (error) {
-                              toast.error('Error sharing: ' + error.message);
                             }
                           } else {
                             toast.info('Sharing not supported on this device');
