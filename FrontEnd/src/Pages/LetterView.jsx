@@ -148,7 +148,7 @@ function LetterView() {
                   {letter.letterTitle}
                 </h3>
               </div>
-              <div className="absolute left-0 right-0 px-16" style={{ top: '20%', bottom: '25%' }}>
+              <div className="absolute left-0 right-0 px-8" style={{ top: '20%', bottom: '35%' }}>
                 <p className="text-base leading-relaxed whitespace-pre-wrap text-justify overflow-hidden">
                   {letter.letterBody}
                 </p>
