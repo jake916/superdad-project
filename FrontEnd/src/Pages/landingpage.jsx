@@ -293,23 +293,23 @@ const LandingPage = () => {
                               onChange={(e) => {
                                 const text = e.target.value;
                                 const words = text.trim().split(/\s+/).filter(Boolean);
-                                if (words.length <= 130) {
+                                if (words.length <= 120) {
                                   setLetterBody(text);
                                   setBodyWordCount(words.length);
                                 } else {
-                                  const limitedText = words.slice(0, 130).join(' ');
+                                  const limitedText = words.slice(0, 120).join(' ');
                                   setLetterBody(limitedText);
-                                  setBodyWordCount(130);
+                                  setBodyWordCount(120);
                                 }
                               }}
                               className="w-full p-3 mb-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-                              placeholder="Write your letter here (max 130 words)"
+                              placeholder="Write your letter here (max 120 words)"
                               rows={15}
                               maxLength={3000}
                               required
                             />
                             <div className="text-sm text-gray-600 mb-2 text-center">
-                              Words remaining: {130 - bodyWordCount}
+                              Words remaining: {120 - bodyWordCount}
                             </div>
                           </div>
                           <div className="text-sm text-white flex items-center justify-center space-x-4">
@@ -660,24 +660,24 @@ const LandingPage = () => {
                           onChange={(e) => {
                             const text = e.target.value;
                             const words = text.trim().split(/\s+/).filter(Boolean);
-                            if (words.length <= 130) {
+                            if (words.length <= 120) {
                               setLetterBody(text);
                               setBodyWordCount(words.length);
                             } else {
-                              const limitedText = words.slice(0, 130).join(' ');
+                              const limitedText = words.slice(0, 120).join(' ');
                               setLetterBody(limitedText);
-                              setBodyWordCount(130);
+                              setBodyWordCount(120);
                             }
                           }}
                           className="w-full p-3 mb-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-                          placeholder="Write your letter here (max 130 words)"
+                          placeholder="Write your letter here (max 120 words)"
                           rows={15}
                           maxLength={3000}
                           required
                         />
                         <div className="mb-4">
                           <div className="text-sm text-gray-600 mb-2 text-center">
-                            Words remaining: {130 - bodyWordCount}
+                            Words remaining: {120 - bodyWordCount}
                           </div>
                           <div className="text-sm text-white flex items-center justify-center space-x-4">
                             <span>Can we share your letter on our social media?</span>
@@ -1016,24 +1016,24 @@ const LandingPage = () => {
                       onChange={(e) => {
                         const text = e.target.value;
                         const words = text.trim().split(/\s+/).filter(Boolean);
-                        if (words.length <= 130) {
+                        if (words.length <= 120) {
                           setLetterBody(text);
                           setBodyWordCount(words.length);
                         } else {
-                          const limitedText = words.slice(0, 130).join(' ');
+                          const limitedText = words.slice(0, 120).join(' ');
                           setLetterBody(limitedText);
-                          setBodyWordCount(130);
+                          setBodyWordCount(120);
                         }
                       }}
                       className="w-full p-3 mb-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-                      placeholder="Write your letter here (max 130 words)"
+                      placeholder="Write your letter here (max 120 words)"
                       rows={15}
                       maxLength={3000}
                       required
                     />
                     <div className="mb-4">
                       <div className="text-sm text-gray-600 mb-2 text-center">
-                        Words remaining: {130 - bodyWordCount}
+                        Words remaining: {120 - bodyWordCount}
                       </div>
                       <div className="text-sm text-white flex items-center justify-center space-x-4">
                         <span>Can we share your letter on our social media?</span>

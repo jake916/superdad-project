@@ -134,8 +134,7 @@ function LetterView() {
               className="absolute -left-[9999px] bg-cover bg-center text-black"
               style={{
                 backgroundImage: `url(${letterTemplate})`,
-                width: '595px',
-                height: '842px',
+                minHeight: '600px',
                 aspectRatio: '210/297'
               }}
             >
@@ -179,7 +178,7 @@ function LetterView() {
 
               <div
                 className="absolute left-0 right-0 px-8 overflow-hidden"
-                style={{ top: '20%', bottom: '35%' }}
+                style={{ top: '20%', bottom: '25%' }}
               >
                 <div className="h-full overflow-y-auto">
                   <p className="text-sm leading-relaxed whitespace-pre-wrap text-justify">
@@ -190,7 +189,7 @@ function LetterView() {
 
               <div
                 className="absolute left-0 right-0 flex justify-center items-center px-8"
-                style={{ bottom: '29%' }}
+                style={{ bottom: '30%' }}
               >
                 <p className="font-semibold text-center">
                   From: {letter.letterSender}
@@ -355,7 +354,7 @@ function LetterView() {
       </div>
       
       <div className="relative z-10 flex flex-col justify-center items-center text-white py-10">
-        <h2 className="text-5xl font-bold mb-4 text-center">
+        <h2 className="text-5xl font-bold mt-25 mb-4 text-center">
           Hey, Super Dad! You've got <br />
           a letter from {letter.letterSender || 'someone special'}.
         </h2>
