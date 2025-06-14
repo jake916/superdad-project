@@ -32,13 +32,17 @@ function LetterView() {
     setIsDownloading(true);
     try {
       const html2canvas = (await import('html2canvas')).default;
+      // Reduced width and height for smaller image
+      const downloadWidth = 400;
+      const downloadHeight = Math.round((842 / 595) * downloadWidth); // maintain aspect ratio
+
       const canvas = await html2canvas(downloadRef.current, {
         backgroundColor: null,
         scale: 2,
         useCORS: true,
         allowTaint: true,
-        width: 595,
-        height: 842
+        width: downloadWidth,
+        height: downloadHeight
       });
 
       const link = document.createElement('a');
@@ -130,21 +134,21 @@ function LetterView() {
             </button>
 
             <div
-              ref={downloadRef}
-              className="absolute -left-[9999px] bg-cover bg-center text-black"
-              style={{
-                backgroundImage: `url(${letterTemplate})`,
-                width: '595px', // A4 width in pixels at 72 DPI
-                height: '842px', // A4 height in pixels at 72 DPI
-                aspectRatio: '210/297'
-              }}
-            >
+            ref={downloadRef}
+            className="absolute -left-[9999px] bg-cover bg-center text-black"
+            style={{
+              backgroundImage: `url(${letterTemplate})`,
+              width: '400px', // reduced width for download image
+              height: '566px', // adjusted height to maintain aspect ratio
+              aspectRatio: '210/297'
+            }}
+          >
               <div className="absolute left-0 right-0 flex justify-center items-center px-8" style={{ top: '12%' }}>
                 <h3 className="text-xl font-bold text-center leading-tight">
                   {letter.letterTitle}
                 </h3>
               </div>
-              <div className="absolute left-0 right-0 px-8" style={{ top: '20%', bottom: '35%' }}>
+              <div className="absolute left-0 right-0 px-16" style={{ top: '20%', bottom: '25%' }}>
                 <p className="text-base leading-relaxed whitespace-pre-wrap text-justify overflow-hidden">
                   {letter.letterBody}
                 </p>
