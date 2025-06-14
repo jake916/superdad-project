@@ -136,8 +136,8 @@ const LandingPage = () => {
           {/* Hero Section */}
           <div className="flex justify-center items-center min-h-screen">
             <section className="py-12 px-6 sm:px-8">
-              <div className="w-80 mx-auto mb-70 text-center">
-                <h2 className="text-[36px]  mb-4 font-poppins font-bold drop-shadow-lg leading-tight">
+              <div className="relative z-10 flex flex-col justify-center items-center text-white py-6 mb-55">
+                <h2 className="text-[40px] w-80  mb-4 font-poppins font-bold drop-shadow-lg leading-tight">
                   This Father's Day, speak the love he rarely hears.
                 </h2>
                 <div className="mb-4 text-white font-poppins text-base sm:text-lg">
