@@ -1033,7 +1033,7 @@ const LandingPage = () => {
                     />
                     <div className="mb-4">
                       <div className="text-sm text-gray-600 mb-2 text-center">
-                        Words remaining: {120 - bodyWordCount}
+                        Words remaining: {130 - bodyWordCount}
                       </div>
                       <div className="text-sm text-white flex items-center justify-center space-x-4">
                         <span>Can we share your letter on our social media?</span>
