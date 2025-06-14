@@ -81,7 +81,7 @@ function LetterView() {
             <img src={logo} alt="Logo" className="h-16 w-auto" />
           </div>
         </nav>
-        
+
         <div className="video-background relative w-full aspect-[9/16] overflow-hidden">
           <iframe
             src="https://www.youtube.com/embed/nOOyE9X3AAU?autoplay=1&mute=1"
@@ -92,7 +92,7 @@ function LetterView() {
             className="w-full h-full absolute top-0 left-0"
           />
         </div>
-        
+
         <div className="relative z-10 flex flex-col justify-center items-center text-white py-6">
           <p className="text-[30px] font-bold mt-25 mb-4 text-center">
             Hey, Super Dad! You've got
@@ -134,7 +134,8 @@ function LetterView() {
               className="absolute -left-[9999px] bg-cover bg-center text-black"
               style={{
                 backgroundImage: `url(${letterTemplate})`,
-                minHeight: '600px',
+                width: '595px', // A4 width in pixels at 72 DPI
+                height: '842px', // A4 height in pixels at 72 DPI
                 aspectRatio: '210/297'
               }}
             >
@@ -211,7 +212,7 @@ function LetterView() {
             <img src={logo} alt="Logo" className="h-20 w-auto" />
           </div>
         </nav>
-        
+
         <div className="video-background relative w-full h-screen overflow-hidden">
           <iframe
             src="https://www.youtube.com/embed/nOOyE9X3AAU?autoplay=1&mute=1"
@@ -222,7 +223,7 @@ function LetterView() {
             className="w-full h-full absolute top-0 left-0"
           />
         </div>
-        
+
         <div className="relative z-10 flex flex-col justify-center items-center text-white py-10">
           <h2 className="text-[20px] font-bold mb-6 text-center">
             Hey, Super Dad! You've got <br />
@@ -341,7 +342,7 @@ function LetterView() {
           <img src={logo} alt="Logo" className="h-24 w-auto" />
         </div>
       </nav>
-      
+
       <div className="video-background relative w-full h-screen overflow-hidden">
         <iframe
           src="https://www.youtube.com/embed/nOOyE9X3AAU?autoplay=1&mute=1"
@@ -352,7 +353,7 @@ function LetterView() {
           className="w-full h-full absolute top-0 left-0"
         />
       </div>
-      
+
       <div className="relative z-10 flex flex-col justify-center items-center text-white py-10">
         <h2 className="text-5xl font-bold mt-25 mb-4 text-center">
           Hey, Super Dad! You've got <br />
