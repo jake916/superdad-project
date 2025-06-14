@@ -94,7 +94,7 @@ function LetterView() {
         </div>
         
         <div className="relative z-10 flex flex-col justify-center items-center text-white py-6">
-          <p className="text-[35px] font-bold mb-4 text-center">
+          <p className="text-[30px] font-bold mt-25 mb-4 text-center">
             Hey, Super Dad! You've got
             a letter from {letter.letterSender || 'someone special'}.
           </p>
@@ -143,7 +143,7 @@ function LetterView() {
                   {letter.letterTitle}
                 </h3>
               </div>
-              <div className="absolute left-0 right-0 px-8" style={{ top: '20%', bottom: '25%' }}>
+              <div className="absolute left-0 right-0 px-8" style={{ top: '20%', bottom: '35%' }}>
                 <p className="text-base leading-relaxed whitespace-pre-wrap text-justify overflow-hidden">
                   {letter.letterBody}
                 </p>
@@ -178,7 +178,7 @@ function LetterView() {
 
               <div
                 className="absolute left-0 right-0 px-8 overflow-hidden"
-                style={{ top: '20%', bottom: '25%' }}
+                style={{ top: '20%', bottom: '35%' }}
               >
                 <div className="h-full overflow-y-auto">
                   <p className="text-sm leading-relaxed whitespace-pre-wrap text-justify">
