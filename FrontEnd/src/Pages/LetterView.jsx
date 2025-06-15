@@ -94,7 +94,8 @@ function LetterView() {
             frameBorder="0"
             allow="autoplay; encrypted-media"
             allowFullScreen
-            className="w-full h-full absolute top-0 left-0"
+            className="absolute top-0 left-0"
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </div>
 

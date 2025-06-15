@@ -17,13 +17,16 @@ function slugify(text) {
 router.post('/', async (req, res) => {
   try {
     const { email, letterTitle, letterBody, letterSender, sharePublicly } = req.body;
-    const slug = slugify(letterTitle);
+    let slug = slugify(letterTitle);
 
-    // Check if slug already exists to ensure uniqueness
-    const existing = await Data.findOne({ slug });
-    if (existing) {
-      return res.status(400).json({ error: 'Letter title must be unique' });
+    // Generate unique slug by appending suffix if slug exists
+    let suffix = 1;
+    let uniqueSlug = slug;
+    while (await Data.findOne({ slug: uniqueSlug })) {
+      uniqueSlug = `${slug}-${suffix}`;
+      suffix++;
     }
+    slug = uniqueSlug;
 
     const newData = new Data({ email, letterTitle, letterBody, letterSender, sharePublicly, slug });
     await newData.save();

@@ -6,7 +6,7 @@ const dataSchema = new mongoose.Schema({
   letterBody: { type: String, required: true },
   letterSender: { type: String, required: true },
   sharePublicly: { type: String, required: true },
-  slug: { type: String, required: true, unique: true },
+  slug: { type: String, required: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Data', dataSchema);
