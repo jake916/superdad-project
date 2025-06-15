@@ -150,9 +150,9 @@ function LetterView() {
                 </h3>
               </div>
               <div className="absolute left-0 right-0 px-16" style={{ top: '20%', bottom: '35%' }}>
-                <p className="text-base leading-relaxed whitespace-pre-wrap text-justify overflow-hidden">
-                  {letter.letterBody}
-                </p>
+              <p className="text-base leading-relaxed whitespace-pre-wrap text-justify overflow-hidden">
+                {processedLetterBody}
+              </p>
               </div>
               <div className="absolute left-0 right-0 flex justify-center items-center px-8" style={{ bottom: '30%' }}>
                 <p className="text-lg font-semibold text-center">
@@ -281,9 +281,9 @@ function LetterView() {
                 </h3>
               </div>
               <div className="absolute left-0 right-0 px-12" style={{ top: '20%', bottom: '25%' }}>
-                <p className="text-base leading-relaxed whitespace-pre-wrap text-justify overflow-hidden">
-                  {letter.letterBody}
-                </p>
+              <p className="text-base leading-relaxed whitespace-pre-wrap text-justify overflow-hidden">
+                {processedLetterBody}
+              </p>
               </div>
               <div className="absolute left-0 right-0 flex justify-center items-center px-12" style={{ bottom: '30%' }}>
                 <p className="text-lg font-semibold text-center">
