@@ -14,6 +14,11 @@ function LetterView() {
   const downloadRef = useRef(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+  // Preprocess letterBody to remove extra paragraph spaces for download image
+  const processedLetterBody = letter && letter.letterBody
+    ? letter.letterBody.replace(/(\r\n|\n|\r)+/g, ' ').replace(/\s+/g, ' ').trim()
+    : '';
+
   // Handle window resize
   useEffect(() => {
     const handleResize = () => {
@@ -405,11 +410,11 @@ function LetterView() {
                 {letter.letterTitle}
               </h3>
             </div>
-            <div className="absolute left-0 right-0 px-16" style={{ top: '20%', bottom: '25%' }}>
-              <p className="text-base leading-relaxed whitespace-pre-wrap text-justify overflow-hidden">
-                {letter.letterBody}
-              </p>
-            </div>
+              <div className="absolute left-0 right-0 px-16" style={{ top: '20%', bottom: '25%' }}>
+                <p className="text-base leading-relaxed whitespace-pre-wrap text-justify overflow-hidden">
+                  {processedLetterBody}
+                </p>
+              </div>
             <div className="absolute left-0 right-0 flex justify-center items-center px-16" style={{ bottom: '30%' }}>
               <p className="text-lg font-semibold text-center">
                 From: {letter.letterSender}
