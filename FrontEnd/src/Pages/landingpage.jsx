@@ -486,7 +486,7 @@ const LandingPage = () => {
               </div>
             </div>
           )}
-          <div className="fixed top-120 right-6 bg-[#ffffff] rounded-lg w-14 h-14 flex flex-col items-center justify-center shadow-lg z-50">
+          <div className="fixed top-145 right-6 bg-[#ffffff] rounded-lg w-14 h-14 flex flex-col items-center justify-center shadow-lg z-50">
             <span className="text-[#e63e21] font-bold text-xl leading-none">{letterCount}</span>
             <span className="text-[#e63e21] text-[8px] leading-none">letters sent</span>
           </div>
